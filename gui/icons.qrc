@@ -1,0 +1,27 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>img/Gnome-go-jump.svg</file>
+    <file>img/Gnome-emblem-default.svg</file>
+    <file>img/Dialog-apply.svg</file>
+    <file>img/Gnome-edit-find.svg</file>
+    <file>img/Gnome-list-add.svg</file>
+    <file>img/Gnome-list-remove.svg</file>
+    <file>img/Gnome-window-close.svg</file>
+    <file>img/list-add.png</file>
+    <file>img/list-remove.png</file>
+    <file>img/Gnome-document-open.svg</file>
+    <file>img/Gnome-document-open-recent.svg</file>
+    <file>img/Gnome-document-properties.svg</file>
+    <file>img/Gnome-document-save.svg</file>
+    <file>img/Gnome-edit-clear.svg</file>
+    <file>img/Gnome-edit-cut.svg</file>
+    <file>img/Gnome-preferences-system.svg</file>
+    <file>img/Gnome-system-run.svg</file>
+    <file>img/Gnome-help-faq.svg</file>
+    <file>img/Gnome-help-contents.svg</file>
+    <file>img/accessories-text-editor.png</file>
+    <file>img/dash.svg</file>
+    <file>img/plus.svg</file>
+    <file>img/Gnome-document-new.svg</file>
+  </qresource>
+</RCC>
