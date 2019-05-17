@@ -27,7 +27,7 @@ It is recommended to run PepFoot through your local Python3 distribution for sec
 
 Linux users can add `pepFoot.desktop` to your local `applications` directory and place a copy of `pepFoot.png` in your local `icons` directory. This `.desktop` file can now be used to launch the full PepFoot GUI.
 
-####Requirements
+#### Requirements
 
 * [Python 3](https://www.python.org)
 * [PyQt >= 5.11](https://www.riverbankcomputing.com/software/pyqt/)
