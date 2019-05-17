@@ -1,15 +1,36 @@
+PepFoot
+=======
+
 PepFoot is intended for analysis and discovery in peptide footprinting, however 
-it may be expanded to encompass more in future releases.
+it may be expanded to encompass more in future releases. PepFoot is released under the [LGPL-3.0 license](https://choosealicense.com/licenses/lgpl-3.0/)
 
-PepFoot is currently maintained by Jedd Bellamy-Carter, University of Nottingham
-<jeddidiah.bellamy-carter@nottingham.ac.uk>. Any queries or improvements to the
-software should be directed there.
+PepFoot is currently maintained by [Jedd Bellamy-Carter, University of Nottingham](jeddidiah.bellamy-carter@nottingham.ac.uk). Any queries or improvements to the
+software should be directed there or by submitting an issue on [GitHub](https://github.com/jbellamycarter/pepfoot/issues).
 
-Requirements
-------------
+Installing
+----------
+
+Download the appropriate file from [Releases](https://github.com/jbellamycarter/pepfoot/releases) and follow the instructions below.
+
+### Windows
+
+To install PepFoot simply run the `pepFoot_1_1_WinOS.exe` installer and follow the wizard. The full PepFoot GUI should then run without problem.
+
+### MacOSX
+
+To install PepFoot simply mount the `pepFoot_1_1_MacOSX.dmg` file and drag `pepFoot.app` into your `Applications`. The full PepFoot GUI can then be accessed from this app.
+
+
+### Linux/Python Users
+
+It is recommended to run PepFoot through your local Python3 distribution for security. To install PepFoot simply extract this repository and run `python setup.py install`. This will add the command `pepfoot` to your local Python distribution as well as handle the package dependencies described below. Launching `pepfoot` from a terminal will launch the full PepFoot GUI.
+
+Linux users can add `pepFoot.desktop` to your local `applications` directory and place a copy of `pepFoot.png` in your local `icons` directory. This `.desktop` file can now be used to launch the full PepFoot GUI.
+
+####Requirements
 
 * [Python 3](https://www.python.org)
-* [PyQT >5.11](https://www.riverbankcomputing.com/software/pyqt/)
+* [PyQt >= 5.11](https://www.riverbankcomputing.com/software/pyqt/)
 * [matplotlib](https://matplotlib.org/)
 * [numpy](https://www.numpy.org/)
 * [scipy](https://scipy.org/)
