@@ -7,6 +7,13 @@ it may be expanded to encompass more in future releases. PepFoot is released und
 PepFoot is currently maintained by [Jedd Bellamy-Carter, University of Nottingham](jeddidiah.bellamy-carter@nottingham.ac.uk). Any queries or improvements to the
 software should be directed there or by submitting an issue on [GitHub](https://github.com/jbellamycarter/pepfoot/issues).
 
+How to Use
+----------
+
+A User Guide is provided with the latest release of PepFoot.
+
+* [**User Guide**](https://github.com/jbellamycarter/pepfoot/releases/download/1.1/UserGuide.pdf)
+
 Installing
 ----------
 
