@@ -14,16 +14,16 @@ Download the appropriate file from [Releases](https://github.com/jbellamycarter/
 
 ### Windows
 
-To install PepFoot simply run the `pepFoot_1_1_WinOS.exe` installer and follow the wizard. The full PepFoot GUI should then run without problem.
+To install PepFoot simply run the [`pepFoot_1_1_WinOS.exe`](https://github.com/jbellamycarter/pepfoot/releases/download/1.1/pepFoot_1_1_WinOS.exe) installer and follow the wizard. The full PepFoot GUI should then run without problem.
 
 ### MacOSX
 
-To install PepFoot simply mount the `pepFoot_1_1_MacOSX.dmg` file and drag `pepFoot.app` into your `Applications`. The full PepFoot GUI can then be accessed from this app.
+To install PepFoot simply mount the [`pepFoot_1_1_MacOSX.dmg`](https://github.com/jbellamycarter/pepfoot/releases/download/1.1/pepFoot_1_1_MacOSX.dmg) file and drag `pepFoot.app` into your `Applications`. The full PepFoot GUI can then be accessed from this app.
 
 
 ### Linux/Python Users
 
-It is recommended to run PepFoot through your local Python3 distribution for security. To install PepFoot simply extract this repository and run `python setup.py install`. This will add the command `pepfoot` to your local Python distribution as well as handle the package dependencies described below. Launching `pepfoot` from a terminal will launch the full PepFoot GUI.
+It is recommended to run PepFoot through your local Python3 distribution for security. To install PepFoot simply extract [`pepFoot_1_1_Python.zip`](https://github.com/jbellamycarter/pepfoot/releases/download/1.1/pepFoot_1_1_Python.zip) and run `python setup.py install`. This will add the command `pepfoot` to your local Python distribution as well as handle the package dependencies described below. Launching `pepfoot` from a terminal will launch the full PepFoot GUI.
 
 Linux users can add `pepFoot.desktop` to your local `applications` directory and place a copy of `pepFoot.png` in your local `icons` directory. This `.desktop` file can now be used to launch the full PepFoot GUI.
 
