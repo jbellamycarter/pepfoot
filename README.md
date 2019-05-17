@@ -1,5 +1,10 @@
-PepFoot
+<img src="https://github.com/jbellamycarter/pepfoot/blob/master/gui/icon.png" height="28"/>pepFoot
 =======
+
+[![License](https://img.shields.io/github/license/jbellamycarter/pepfoot.svg)](https://choosealicense.com/licenses/lgpl-3.0/)
+[![Release](https://img.shields.io/github/release/jbellamycarter/pepfoot.svg)](https://github.com/jbellamycarter/pepfoot/releases/latest/)
+![Downloads](https://img.shields.io/github/downloads/jbellamycarter/pepfoot/total.svg)
+[![Python](https://img.shields.io/badge/language-python-blue.svg)](https://www.python.org)
 
 PepFoot is intended for analysis and discovery in peptide footprinting, however 
 it may be expanded to encompass more in future releases. PepFoot is released under the [LGPL-3.0 license](https://choosealicense.com/licenses/lgpl-3.0/)
