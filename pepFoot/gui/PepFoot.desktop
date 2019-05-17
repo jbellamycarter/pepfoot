@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Version=1.1
+Name=PepFoot
+GenericName=PepFoot
+Comment=Graphical user interface application for semi-automated processing of protein footprinting data
+Icon=pepfoot
+TryExec=pepfoot
+Terminal=false
+MimeType=text/x-python;
+Categories=Science;Qt;
+Keywords=Science;Qt;
+Name[en_GB]=PepFoot.desktop
