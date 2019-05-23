@@ -43,7 +43,7 @@ from pepFoot.gui.pepfoot import Ui_MainWindow
 from pepFoot.gui.about import Ui_AboutDialog
 from pepFoot.gui.preferences import Ui_Dialog
 
-import pepFoot.mz5Reader
+import pepFoot.mz5Reader as mz5Reader
 from pepFoot.utility import *
 
 
