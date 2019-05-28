@@ -10,7 +10,7 @@ it may be expanded to encompass more in future releases. PepFoot is released und
 
 If you use this software please cite the following article:
 * Bellamy-Carter, J; Oldham, N. J. PepFoot: a software package for semi-automated processing of protein footprinting data. *J. Proteome Res.* **2019**
-[doi: 10.1021/acs.jproteome.9b00238](https://doi.org/10.1021/acs.jproteome.9b00238)
+[doi: 10.1021/acs.jproteome.9b00238](https://doi.org/10.1021/acs.jproteome.9b00238) (Just Accepted)
 
 PepFoot is currently maintained by [Jedd Bellamy-Carter, University of Nottingham](jeddidiah.bellamy-carter@nottingham.ac.uk). Any queries or improvements to the
 software should be directed there or by submitting an issue on [GitHub](https://github.com/jbellamycarter/pepfoot/issues).
