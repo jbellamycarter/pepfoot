@@ -203,7 +203,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.FileAdd.clicked.connect(self.file_add)
         self.FileRemove.clicked.connect(self.file_remove)
         self.FileConvert.clicked.connect(self.file_convert)
-        self.FileConvert.setEnabled(False)
+        self.FileConvert.setEnabled(True)
         self.RemoveAssignment.clicked.connect(self.remove_assignment)
         self.LoadPdb.clicked.connect(self.load_pdb)
         self.AnalysisUpdateBtn.clicked.connect(self.update_analysis)
@@ -669,66 +669,84 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.status('Successfully exported to {}!'.format(os.path.basename(file_name), 500))
 
     def batch_process(self):
-        self.save_project()
-        self.PEPLIST_CHANGED = False
-        self.status('Batch processing {} ...'.format(self.project['name']))
-        total = len(self.project['data files'])
-        count = 0
-        APP.processEvents()
-        self.ProgressBar.setMaximum(total)
-        self.ProgressBar.setValue(0)
-        num_peptides = len(self.project['peptides'])
-        for i, data_file in enumerate(self.project['data files']):
-            self.open_mz5(data_file)
-            count += 1
+        try:
+            self.save_project()
+            self.PEPLIST_CHANGED = False
+            self.status('Batch processing {} ...'.format(self.project['name']))
+            total = len(self.project['data files'])
+            count = 0
             APP.processEvents()
-            self.ProgressBar.setValue(count)
-            self.project['areas'][i].clear()
-            self.project['fractional mod'][i].clear()
-            self.project['areas'][i] = [[], []]
+            self.ProgressBar.setMaximum(total)
+            self.ProgressBar.setValue(0)
+            num_peptides = len(self.project['peptides'])
+            for i, data_file in enumerate(self.project['data files']):
+                self.open_mz5(data_file)
+                count += 1
+                APP.processEvents()
+                self.ProgressBar.setValue(count)
+                self.project['areas'][i].clear()
+                self.project['fractional mod'][i].clear()
+                self.project['areas'][i] = [[], []]
 
-            self.status('Batch integrating {} ...'.format(
-                os.path.basename(data_file)))
-            for j in range(num_peptides):
-                unmod = 0
-                mod = 0
-                if self.project['rt array'][0][j]:
-                    unmod = self.data.get_area(
-                        self.project['rt array'][0][j], self.project['m/z array'][0][j])
-                self.project['areas'][i][0].append(unmod)
-                if self.project['rt array'][1][j]:
-                    mod = self.data.get_area(
-                        self.project['rt array'][1][j], self.project['m/z array'][1][j])
-                self.project['areas'][i][1].append(mod)
-                if unmod and mod:
-                    self.project['fractional mod'][i].append(mod/(unmod+mod))
-                elif unmod and not mod:
-                    self.project['fractional mod'][i].append(0)
-                elif mod and not unmod:
-                    self.project['fractional mod'][i].append(1)
-                else:
-                    self.project['fractional mod'][i].append(0)
-        APP.processEvents()
-        self.ProgressBar.reset()
-        self.ProgressBar.setMaximum(1)
-        self.save_project()
-        self.open_project(self.project_file)
-        #self.update_analysis()
-        self.status('Batch processing of {} complete!'.format(
-            self.project['name']), 2000)
+                self.status('Batch integrating {} ...'.format(
+                    os.path.basename(data_file)))
+                for j in range(num_peptides):
+                    unmod = 0
+                    mod = 0
+                    if self.project['rt array'][0][j]:
+                        unmod = self.data.get_area(
+                            self.project['rt array'][0][j], self.project['m/z array'][0][j])
+                    self.project['areas'][i][0].append(unmod)
+                    if self.project['rt array'][1][j]:
+                        mod = self.data.get_area(
+                            self.project['rt array'][1][j], self.project['m/z array'][1][j])
+                    self.project['areas'][i][1].append(mod)
+                    if unmod and mod:
+                        self.project['fractional mod'][i].append(mod/(unmod+mod))
+                    elif unmod and not mod:
+                        self.project['fractional mod'][i].append(0)
+                    elif mod and not unmod:
+                        self.project['fractional mod'][i].append(1)
+                    else:
+                        self.project['fractional mod'][i].append(0)
+            APP.processEvents()
+            self.ProgressBar.reset()
+            self.ProgressBar.setMaximum(1)
+            self.save_project()
+            self.open_project(self.project_file)
+            #self.update_analysis()
+            self.status('Batch processing of {} complete!'.format(
+                self.project['name']), 2000)
+        except AssertionError as error:
+            self.status(error.args[0])
 
     def file_convert(self):
         """Convert RAW files to .mz5 with ProteoWizard msconvert"""
+        if self.pwiz:
+              if not os.path.exists(self.pwiz):
+                    self.pwiz = None
+        if not self.pwiz:
+            pwiz_loc = Qtw.QFileDialog.getOpenFileName(self, 'Select msconvert executable', '', 'All Files(*)')[0]
+            if pwiz_loc:
+                self.pwiz = pwiz_loc
+            else:
+                return
+
         file_names = Qtw.QFileDialog.getOpenFileNames(self, 'Select raw file(s) to convert', '',
                                                       'Vendor MS Files (*.RAW *.raw *.d *.YEP *.FID *.BAF *.WIFF)')[0]
         if file_names:
             for name in file_names:
                 try:
-                    subprocess.call([self.pwiz, name, "--filter", "\"zeroSamples removeExtra\"", "--mz5"], check=True)
+                    subprocess.run([self.pwiz, name, "--zlib", "--filter", "\"zeroSamples removeExtra\"", "--mz5", "-o", os.path.dirname(name)], check=True)
+                    self.TREE_CHANGED = True
+                    name_ = os.path.splitext(name)[0] + '.mz5'
+                    if name_ not in self.file_list:
+                        self.file_list.append(name_)
+                        self.FileList.addItem(os.path.basename(name_))
+
                 except subprocess.CalledProcessError:
                     self.status('Unable to convert {}'.format(name))
                     continue
-        # FIXME: Finish subprocess for converting raw files
 
     def file_add(self):
         self.TREE_CHANGED = True
@@ -761,8 +779,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         if not os.path.isabs(file_name):
             file_name = os.path.normpath(os.path.join(self.project_dir, file_name))
         if not os.path.exists(file_name):
-            self.status('Cannot find file: {}!'.format(file_name))
-            return
+            raise AssertionError('Cannot find file: {}!'.format(file_name))
         self.status('Reading {}...'.format(os.path.basename(file_name)))
         try:
             self.data = mz5Reader.mz5(file_name, self.actionInMemory.isChecked())
@@ -1719,7 +1736,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         about.show()
 
     def preferences_dialog(self, tab):
-        prefs = Preferences(tab)
+        prefs = Preferences(tab, self)
         prefs.exec_()
         prefs.show()
 
@@ -1750,8 +1767,9 @@ class About(Qtw.QDialog, Ui_AboutDialog):
 
 
 class Preferences(Qtw.QDialog, Ui_Dialog):
-    def __init__(self, tab):
+    def __init__(self, tab, main_):
         super(Preferences, self).__init__()
+        self.main_ = main_
         self.setupUi(self)
         self.Tabs.setCurrentIndex(tab)
         self.fill_mods()
@@ -1899,10 +1917,10 @@ class Preferences(Qtw.QDialog, Ui_Dialog):
                 'Mass': float(self.ModTable.item(row, 3).text()),
                 'Residues': self.ModTable.item(row, 4).text(),
                 'ID': self.ModTable.item(row, 0).text()}
-        main.DiffMod.clear()
-        main.DiffMod.addItem('None')
-        main.DiffMod.insertSeparator(1)
-        main.fill_mods()
+        self.main_.DiffMod.clear()
+        self.main_.DiffMod.addItem('None')
+        self.main_.DiffMod.insertSeparator(1)
+        self.main_.fill_mods()
 
         enzymes.clear()
         for row in range(self.EnzymeTable.rowCount()):
@@ -1915,10 +1933,10 @@ class Preferences(Qtw.QDialog, Ui_Dialog):
                 enzymes[_name] = '[{}]'.format(_nterm)
             else:
                 enzymes[_name] = '(?=[{}])'.format(_cterm)
-        main.Enzyme.clear()
-        main.Enzyme.addItem('None')
-        main.Enzyme.insertSeparator(1)
-        main.Enzyme.addItems(sorted(list(enzymes)))
+        self.main_.Enzyme.clear()
+        self.main_.Enzyme.addItem('None')
+        self.main_.Enzyme.insertSeparator(1)
+        self.main_.Enzyme.addItems(sorted(list(enzymes)))
 
 def run_app():
     start = time.time()
