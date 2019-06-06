@@ -38,6 +38,12 @@ class Ui_AboutDialog(object):
         self.Tabs.addTab(self.tab, "")
         self.tab_2 = QtWidgets.QWidget()
         self.tab_2.setObjectName("tab_2")
+        self.gridLayout_7 = QtWidgets.QGridLayout(self.tab_2)
+        self.gridLayout_7.setObjectName("gridLayout_7")
+        self.label_3 = QtWidgets.QLabel(self.tab_2)
+        self.label_3.setAlignment(QtCore.Qt.AlignLeading|QtCore.Qt.AlignLeft|QtCore.Qt.AlignTop)
+        self.label_3.setObjectName("label_3")
+        self.gridLayout_7.addWidget(self.label_3, 0, 0, 1, 1)
         self.Tabs.addTab(self.tab_2, "")
         self.tab_3 = QtWidgets.QWidget()
         self.tab_3.setObjectName("tab_3")
@@ -93,6 +99,7 @@ class Ui_AboutDialog(object):
         AboutDialog.setWindowTitle(_translate("AboutDialog", "About..."))
         self.label.setText(_translate("AboutDialog", "<html><head/><body><p align=\"center\"><span style=\" font-weight:600;\">PepFoot</span> is an open-source software for analysing peptide footprinting data.</p><p align=\"center\">Copyright © 2019 Jeddidiah Bellamy-Carter</p><p align=\"center\"><br/>If you have any contributions/queries or suggestions for the software please contact <a href=\"mailto:\'stxjsbe@nottingham.ac.uk\'\"><span style=\" text-decoration: underline; color:#0000ff;\">Jeddidiah Bellamy-Carter.</span></a></p><p align=\"center\">Available from <a href=\"https://github.com/jbellamycarter/pepfoot\"><span style=\" text-decoration: underline; color:#0000ff;\">github.com/jbellamycarter/pepfoot</span></a></p><p align=\"justify\"><br/><span style=\" font-style:italic;\">This program is released under the GNU Lesser General Public License version 3 (see </span>License<span style=\" font-style:italic;\"> for more details). You may redistribute/modify it under the terms of this license. </span></p></body></html>"))
         self.Tabs.setTabText(self.Tabs.indexOf(self.tab), _translate("AboutDialog", "PepFoot"))
+        self.label_3.setText(_translate("AboutDialog", "<html><head/><body><p>If you use <span style=\" font-weight:600;\">PepFoot</span> please cite:</p><p><br/>J. Bellamy-Carter, N.J. Oldham, <span style=\" font-style:italic;\">J. Proteome Res.</span><span style=\" font-weight:600;\">2019</span>. <a href=\"https://dx.doi.org/10.1021/acs.jproteome.9b00238\"><span style=\" text-decoration: underline; color:#0000ff;\">10.1021/acs.jproteome.9b00238</span></a></p></body></html>"))
         self.Tabs.setTabText(self.Tabs.indexOf(self.tab_2), _translate("AboutDialog", "How to Cite"))
         self.textBrowser_2.setHtml(_translate("AboutDialog", "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.0//EN\" \"http://www.w3.org/TR/REC-html40/strict.dtd\">\n"
 "<html><head><meta name=\"qrichtext\" content=\"1\" /><style type=\"text/css\">\n"

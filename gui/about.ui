@@ -71,6 +71,18 @@
       <attribute name="title">
        <string>How to Cite</string>
       </attribute>
+      <layout class="QGridLayout" name="gridLayout_7">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_3">
+         <property name="text">
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;If you use &lt;span style=&quot; font-weight:600;&quot;&gt;PepFoot&lt;/span&gt; please cite:&lt;/p&gt;&lt;p&gt;&lt;br/&gt;J. Bellamy-Carter, N.J. Oldham, &lt;span style=&quot; font-style:italic;&quot;&gt;J. Proteome Res.&lt;/span&gt;&lt;span style=&quot; font-weight:600;&quot;&gt;2019&lt;/span&gt;. &lt;a href=&quot;https://dx.doi.org/10.1021/acs.jproteome.9b00238&quot;&gt;&lt;span style=&quot; text-decoration: underline; color:#0000ff;&quot;&gt;10.1021/acs.jproteome.9b00238&lt;/span&gt;&lt;/a&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
      <widget class="QWidget" name="tab_3">
       <attribute name="title">
