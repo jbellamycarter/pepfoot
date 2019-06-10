@@ -20,7 +20,7 @@ How to Use
 
 * A [**User Guide**](https://github.com/jbellamycarter/pepfoot/releases/download/1.1/UserGuide.pdf)  is provided with the latest release of PepFoot.
 * A [**Video**](https://figshare.com/articles/PepFoot_A_Software_Package_for_Semiautomated_Processing_of_Protein_Footprinting_Data/8236160) showing basic PepFoot usage is available.
-* [Example `.pfoot` files](https://figshare.com/articles/PepFoot_A_Software_Package_for_Semiautomated_Processing_of_Protein_Footprinting_Data/8236157) are available for OmpF<sup>[1](#ompf)</sup> and USP5<sup>[2](#usp5)</sup> datasets, [PXD007207](https://www.ebi.ac.uk/pride/archive/projects/PXD007207) and [PXD004971](https://www.ebi.ac.uk/pride/archive/projects/PXD004971) respectively.
+* [**Example `.pfoot` files**](https://figshare.com/articles/PepFoot_A_Software_Package_for_Semiautomated_Processing_of_Protein_Footprinting_Data/8236157) are available for OmpF<sup>[1](#ompf)</sup> and USP5<sup>[2](#usp5)</sup> datasets, [PXD007207](https://www.ebi.ac.uk/pride/archive/projects/PXD007207) and [PXD004971](https://www.ebi.ac.uk/pride/archive/projects/PXD004971) respectively.
 
 
 
