@@ -9,8 +9,8 @@ PepFoot is intended for analysis and discovery in peptide footprinting, however
 it may be expanded to encompass more in future releases. PepFoot is released under the [LGPL-3.0 license](https://choosealicense.com/licenses/lgpl-3.0/)
 
 If you use this software please cite the following article:
-* Bellamy-Carter, J; Oldham, N. J. PepFoot: a software package for semi-automated processing of protein footprinting data. *J. Proteome Res.* **2019**
-[doi: 10.1021/acs.jproteome.9b00238](https://doi.org/10.1021/acs.jproteome.9b00238)
+* Bellamy-Carter, J; Oldham, N. J. [PepFoot: a software package for semi-automated processing of protein footprinting data. *J. Proteome Res.* **2019**
+doi: 10.1021/acs.jproteome.9b00238](https://doi.org/10.1021/acs.jproteome.9b00238)
 
 PepFoot is currently maintained by [Jedd Bellamy-Carter, University of Nottingham](jeddidiah.bellamy-carter@nottingham.ac.uk). Any queries or improvements to the
 software should be directed there or by submitting an issue on [GitHub](https://github.com/jbellamycarter/pepfoot/issues).
@@ -18,9 +18,11 @@ software should be directed there or by submitting an issue on [GitHub](https://
 How to Use
 ----------
 
-A User Guide is provided with the latest release of PepFoot.
+* A [**User Guide**](https://github.com/jbellamycarter/pepfoot/releases/download/1.1/UserGuide.pdf)  is provided with the latest release of PepFoot.
+* A [**Video**](https://figshare.com/articles/PepFoot_A_Software_Package_for_Semiautomated_Processing_of_Protein_Footprinting_Data/8236160) showing basic PepFoot usage is available.
+* [Example `.pfoot` files](https://figshare.com/articles/PepFoot_A_Software_Package_for_Semiautomated_Processing_of_Protein_Footprinting_Data/8236157) are available for OmpF<sup>[1](#ompf)</sup> and USP5<sup>[2](#usp5)</sup> datasets, [PXD007207](https://www.ebi.ac.uk/pride/archive/projects/PXD007207) and [PXD004971](https://www.ebi.ac.uk/pride/archive/projects/PXD004971) respectively.
 
-* [**User Guide**](https://github.com/jbellamycarter/pepfoot/releases/download/1.1/UserGuide.pdf)
+
 
 Installing
 ----------
@@ -81,3 +83,11 @@ PepFoot `.pfoot` files are a human-readable JSON file. The keys correspond to th
 | fractional mod   	| NxM array of fractional modification values from analysis                        	  |
 | treatment        	| Nested list with indices for data files grouped by treatment `[[#, ...],[#, ...]]`  |
 | pdb file         	| PDB file associated with project                                                 	  |
+
+References
+----------
+
+<a name="ompf">1</a>: Manzi, L.; Barrow, A. S.; Hopper, J. T.; Kaminska, R.; Kleanthous, C.; Robinson, C. V.; Moses, J. E.; Oldham, N. J. [Carbene Footprinting Reveals Binding Interfaces of a Multimeric Membrane-Spanning Protein.](https://doi.org/10.1002/anie.201708254) *Angew. Chemie - Int. Ed.* **2017**, *56*, 14873–14877.
+
+<a name="usp5">2</a>: Manzi, L.; Barrow, A. S.; Scott, D.; Layfield, R.; Wright, T. G.; Moses, J. E.; Oldham, N. J. [Carbene footprinting accurately maps binding sites in protein-ligand and protein-protein interactions.](https://doi.org/10.1038/ncomms13288) *Nat. Commun.* **2016**, *7*, 1–9.
+
