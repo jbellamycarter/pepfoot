@@ -9,7 +9,7 @@ PepFoot is intended for analysis and discovery in peptide footprinting, however
 it may be expanded to encompass more in future releases. PepFoot is released under the [LGPL-3.0 license](https://choosealicense.com/licenses/lgpl-3.0/)
 
 If you use this software please cite the following article:
-* Bellamy-Carter, J; Oldham, N. J. [PepFoot: a software package for semi-automated processing of protein footprinting data. *J. Proteome Res.* **2019**
+* Bellamy-Carter, J; Oldham, N. J. [PepFoot: a software package for semi-automated processing of protein footprinting data. *J. Proteome Res.* 2019, **18**, 2925−2930.
 doi: 10.1021/acs.jproteome.9b00238](https://doi.org/10.1021/acs.jproteome.9b00238)
 
 PepFoot is currently maintained by [Jedd Bellamy-Carter, University of Nottingham](jeddidiah.bellamy-carter@nottingham.ac.uk). Any queries or improvements to the
