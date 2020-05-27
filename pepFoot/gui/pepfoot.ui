@@ -2108,6 +2108,9 @@
             <property name="defaultDropAction">
              <enum>Qt::MoveAction</enum>
             </property>
+            <property name="selectionMode">
+             <enum>QAbstractItemView::MultiSelection</enum>
+            </property>
            </widget>
           </item>
           <item>

@@ -871,6 +871,7 @@ class Ui_MainWindow(object):
         self.ApoList.setDragEnabled(True)
         self.ApoList.setDragDropMode(QtWidgets.QAbstractItemView.DragDrop)
         self.ApoList.setDefaultDropAction(QtCore.Qt.MoveAction)
+        self.ApoList.setSelectionMode(QtWidgets.QAbstractItemView.MultiSelection)
         self.ApoList.setObjectName("ApoList")
         self.verticalLayout_2.addWidget(self.ApoList)
         self.label_26 = QtWidgets.QLabel(self.AnalysisTab)
@@ -1388,4 +1389,5 @@ class Ui_MainWindow(object):
         self.actionNew_from_Template.setText(_translate("MainWindow", "New from Template"))
 
 from PyQt5 import QtWebEngineWidgets
-from pepFoot.gui import icons_rc
+from pepfoot.gui import icons_rc
+

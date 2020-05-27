@@ -233,7 +233,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Ax2.set_xlabel('m/z', style='italic')
         self.ms1Ax2.info = self.ms1Ax2.set_title('rt: -', size='medium', loc='right')
         self.ms1Ax2.set_xlim(100, 1000)
-        self.ms1Ln2, = self.ms1Ax2.plot([], [], 'k')
+        self.ms1Ln2, = self.ms1Ax2.plot([], [], c=BLUE)
         self.ms1iso2, = self.ms1Ax2.plot([], [], c='hotpink', marker='o', alpha=0.7, transform=self.ms1Ax2.get_xaxis_transform())
 
         self.ms1Ax3 = self.ms1Fig.add_subplot(222)
@@ -247,7 +247,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Ax4.set_xlabel('m/z', style='italic')
         self.ms1Ax4.info = self.ms1Ax4.set_title('rt: -', size='medium', loc='right')
         self.ms1Ax4.set_xlim(100, 1000)
-        self.ms1Ln4, = self.ms1Ax4.plot([], [], 'k')
+        self.ms1Ln4, = self.ms1Ax4.plot([], [], c=ORANGE)
         self.ms1iso4, = self.ms1Ax4.plot([], [], c='hotpink', marker='o', alpha=0.7, transform=self.ms1Ax4.get_xaxis_transform())
 
         # Set common attributes
@@ -524,6 +524,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             self.project['data files'].clear()
             self.project['areas'].clear()
             self.project['fractional mod'].clear()
+            self.project['treatment'] = []
             for i, file in enumerate(self.file_list):
                 if os.path.isabs(file):
                     _path = file
