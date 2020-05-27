@@ -2,12 +2,7 @@
 title: 'PepFoot User Guide v1.1'
 author: Jedd Bellamy-Carter
 date: 17 May 2019
-...
-
-<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
-    <img alt="Creative Commons Licence" style="border-width:0" src="img/cc-by-nc-sa.png" />
-</a>
-<br />This work</span> by <a xmlns:cc="http://creativecommons.org/ns#" href="https://github.com/jbellamycarter" property="cc:attributionName" rel="cc:attributionURL">Jedd Bellamy-Carter</a> is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License</a>.
+---
 
 <img src="img/pepfoot-banner.png" width="80%">
 <p style="text-align:center;font-size:36pt">User Guide v1.1</p>
@@ -22,6 +17,7 @@ software should be directed there or by submitting an issue on [GitHub](https://
 
 
 <div style="page-break-after: always;"></div>
+
 # Getting Started
 
 ## Installing PepFoot
@@ -63,6 +59,7 @@ PepFoot only reads the [`.mz5` data format](https://dx.doi.org/10.1074/mcp.O111.
 
 
 <div style="page-break-after: always;"></div>
+
 # Using PepFoot
 
 ## Setting up a Project
@@ -121,6 +118,7 @@ The default mouse function in the plots is `Zoom`, to generate mass spectra for 
 If a suitable spectrum can be generated for a set of chromatographic peaks, the user can integrate these using the `Integrate` *(`I` key)* function in the same way as extracting. The peaks will be integrated and the *m/z* and retention time ranges stored to the project. If both unlabelled and labelled peptides are observed and integrated the fractional modification is calculated. Once a peptide has been identified and integrated it is marked with a green tick.
 
 <div style="page-break-after: always;"></div>
+
 ## Analysing the Whole Dataset
 
 Once all peptides have been identified and assigned for the first file, the remaining files can now be processed. This is done by pressing the `Batch` button. The batch of files are processed using the parameters set during the initial analysis step by the user. The resulting areas will be stored to the project along with calculated fractional modifications.
@@ -148,6 +146,7 @@ After footprinting data has been processed PepFoot allows it to be mapped to a 3
 In addition to storing footprinting results to `.pdb`, PepFoot also allows export to a `.csv`. This will contain all parameters used in calculating fractional modification results as well as the results including significance measurements. This allows the user to format the data in whichever way they want or perform additional analysis not available in PepFoot.
 
 <div style="page-break-after: always;"></div>
+
 # Project Schema
 
 PepFoot `.pfoot` files are a human-readable JSON file according to the following schema.
