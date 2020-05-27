@@ -1,4 +1,4 @@
-<img src="https://github.com/jbellamycarter/pepfoot/blob/master/pepfoot-banner.png" width="70%"/>
+<img src="pepfoot-banner.png" width="70%"/>
 
 [![License](https://img.shields.io/github/license/jbellamycarter/pepfoot.svg)](https://choosealicense.com/licenses/lgpl-3.0/)
 [![Release](https://img.shields.io/github/release/jbellamycarter/pepfoot.svg)](https://github.com/jbellamycarter/pepfoot/releases/latest/)
