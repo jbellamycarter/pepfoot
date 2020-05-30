@@ -49,6 +49,7 @@ Linux users can add `pepFoot.desktop` to your local `applications` directory and
 
 * [Python 3](https://www.python.org)
 * [PyQt >= 5.11](https://www.riverbankcomputing.com/software/pyqt/)
+  * This software require `WebEngine`, this was split into a separate package from 5.12, use `PyQt5==5.11.2` if unsure.
 * [matplotlib](https://matplotlib.org/)
 * [numpy](https://www.numpy.org/)
 * [scipy](https://scipy.org/)
