@@ -26,7 +26,7 @@ Installing
 
 ### Linux/Python Users
 
-It is recommended to run PepFoot through your local Python3 distribution for security. To install PepFoot simply extract this repository and run `python setup.py install`. This will add the command `pepfoot` to your local Python distribution as well as handle the package dependencies described above. Launching `pepfoot` from a terminal will launch the full PepFoot GUI.
+It is recommended to run PepFoot through your local Python3 distribution for security. To install PepFoot simply extract this repository and run `python setup.py install --user`. This will add the command `pepfoot` to your local Python distribution as well as handle the package dependencies described above. Launching `pepfoot` from a terminal will launch the full PepFoot GUI.
 
 Linux users can add `pepFoot.desktop` to your local `applications` directory and place a copy of `pepFoot.png` in your local `icons` directory. This `.desktop` file can now be used to launch the full PepFoot GUI. *Note: If your python distribution is local i.e. within your `home` folder, you may need to edit the `Exec` line in the `.desktop` file to the `pepfoot` executable in your python `bin`*
 
