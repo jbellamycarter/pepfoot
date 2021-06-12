@@ -55,10 +55,11 @@ def report_exception(exc_type, exc_value, exc_traceback):
           Qtg.qApp.quit()
         return
 
-      Qtw.QMessageBox.warning(None, "Error", "An error has occurred. Please submit the following report to Jedd at stxjsbe@nottingham.ac.uk\n\n{}".format("".join(traceback.format_exception(exc_type, exc_value, exc_traceback))))
+      Qtw.QMessageBox.warning(None, "Error", "An error has occurred. Please submit the following report to Jedd at j.s.g.bellamy-carter@bham.ac.uk\n\n{}".format("".join(traceback.format_exception(exc_type, exc_value, exc_traceback))))
 
       print("Closed due to an error. This is the full error report:")
       print("".join(traceback.format_exception(exc_type, exc_value, exc_traceback)))
+      print("--End of report--")
       sys.exit(1)
 
 sys.excepthook = report_exception
