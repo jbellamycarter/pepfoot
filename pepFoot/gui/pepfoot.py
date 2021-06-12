@@ -288,7 +288,7 @@ class Ui_MainWindow(object):
         font.setPointSize(9)
         self.MissCleave.setFont(font)
         self.MissCleave.setButtonSymbols(QtWidgets.QAbstractSpinBox.UpDownArrows)
-        self.MissCleave.setMaximum(3)
+        self.MissCleave.setMaximum(10)
         self.MissCleave.setObjectName("MissCleave")
         self.gridLayout_10.addWidget(self.MissCleave, 5, 5, 1, 1)
         self.label = QtWidgets.QLabel(self.scrollAreaWidgetContents)

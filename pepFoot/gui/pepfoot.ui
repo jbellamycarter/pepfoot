@@ -694,7 +694,7 @@
              <enum>QAbstractSpinBox::UpDownArrows</enum>
             </property>
             <property name="maximum">
-             <number>3</number>
+             <number>10</number>
             </property>
            </widget>
           </item>
