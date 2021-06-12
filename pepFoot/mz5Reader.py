@@ -58,7 +58,7 @@ class mz5():
             self.filename = filename
         self.file = h5py.File(self.filename, 'r')
         self.in_memory = in_memory
-        self.num_scan = self.file['ChromatogramIndex'][0]
+        self.num_scan = self.file['SpectrumIndex'].len()
         self.scan_lookup = np.zeros((self.num_scan),
                                     dtype=[('time', 'float32'),
                                            ('start', 'uint32'),
@@ -106,14 +106,20 @@ class mz5():
             idx = np.where(param_id[start:end] == self.time_ref)[0]
             self.scan_lookup[scan]['time'] = param_value[start+idx][0]
             idx = np.where(param_id[start:end] == self.msn_ref)[0]
-            self.scan_lookup[scan]['ms level'] = param_value[start+idx][0]
+            self.scan_lookup[scan]['ms level'] = int(param_value[start+idx][0])
             if self.scan_lookup[scan]['ms level'] > 1:
                 idx = np.where(param_id[start:end] == self.precursor_ref)[0]
                 self.scan_lookup[scan]['precursor'] = param_value[start+idx][0]
             idx = np.where(param_id[start:end] == self.min_mz_ref)[0]
-            self.scan_lookup[scan]['min mz'] = float(param_value[start+idx][0])
+            if idx.size:
+                self.scan_lookup[scan]['min mz'] = float(param_value[start+idx][0])
+            else:
+                print("Warning: scan #{} has no minimum m/z, it may be empty.".format{scan})
             idx = np.where(param_id[start:end] == self.max_mz_ref)[0]
-            self.scan_lookup[scan]['max mz'] = float(param_value[start+idx][0])
+            if idx.size:
+                self.scan_lookup[scan]['max mz'] = float(param_value[start+idx][0])
+            else:
+                print("Warning: scan #{} has no maximum m/z, it may be empty.".format{scan})
 
     def get_limits(self):
         self.time_range = (self.scan_lookup['time'][0],
