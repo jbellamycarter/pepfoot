@@ -1389,5 +1389,5 @@ class Ui_MainWindow(object):
         self.actionNew_from_Template.setText(_translate("MainWindow", "New from Template"))
 
 from PyQt5 import QtWebEngineWidgets
-from pepfoot.gui import icons_rc
+from pepFoot.gui import icons_rc
 

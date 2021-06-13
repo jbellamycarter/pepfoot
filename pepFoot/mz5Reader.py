@@ -114,12 +114,12 @@ class mz5():
             if idx.size:
                 self.scan_lookup[scan]['min mz'] = float(param_value[start+idx][0])
             else:
-                print("Warning: scan #{} has no minimum m/z, it may be empty.".format{scan})
+                print("Warning: scan #{} has no minimum m/z, it may be empty.".format(scan))
             idx = np.where(param_id[start:end] == self.max_mz_ref)[0]
             if idx.size:
                 self.scan_lookup[scan]['max mz'] = float(param_value[start+idx][0])
             else:
-                print("Warning: scan #{} has no maximum m/z, it may be empty.".format{scan})
+                print("Warning: scan #{} has no maximum m/z, it may be empty.".format(scan))
 
     def get_limits(self):
         self.time_range = (self.scan_lookup['time'][0],
