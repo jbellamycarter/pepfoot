@@ -197,34 +197,28 @@ class mz5():
                                       self.scan_lookup['precursor'][min_scan:max_scan]))[0] + min_scan
             else:
                 scan_list = np.where(self.scan_lookup['ms level'][min_scan:max_scan] == 2)[0] + min_scan
-
-        merge_mz = self.get_mzs(scan_list[0])
-        merge_int = self.get_ints(scan_list[0])
+      
+        bin_width = np.median(np.diff(merge_mz[0])) # Determines median difference between adjacent m/z
+        ref_mz = np.arange(self.ms1_range, bin_width)
 
         if mz_range:
-            idx = np.where((merge_mz >= mz_range[0]) & (merge_mz < mz_range[1]))[0]
-            merge_mz = merge_mz[idx]
-            merge_int = merge_int[idx]
+            idx = np.where((ref_mz >= mz_range[0]) & (ref_mz < mz_range[1]))[0]
+            ref_mz = ref_mz[idx]
+        
+        merge_int = np.zeros_like(ref_mz)
 
-        for scan in scan_list[1:]:
+        for scan in scan_list:
             tmp_mz = self.get_mzs(scan)
             tmp_int = self.get_ints(scan)
             if mz_range:
                 idx = np.where((tmp_mz >= mz_range[0]) & (tmp_mz < mz_range[1]))[0]
                 tmp_mz = tmp_mz[idx]
                 tmp_int = tmp_int[idx]
-
-            mz1_mask = np.in1d(merge_mz, tmp_mz)
-            mz2_mask = np.in1d(tmp_mz, merge_mz, invert=True)
-            # Generate unique tmp_mz and tmp_int if multiple mz are the same
-            if tmp_mz[~mz2_mask].size != merge_int[mz1_mask].size:
-                tmp_mz, unique_idx = np.unique(tmp_mz, return_index=True)
-                tmp_int = tmp_int[unique_idx]
-                mz2_mask = np.in1d(tmp_mz, merge_mz, invert=True)
-            ins = np.searchsorted(merge_mz, tmp_mz[mz2_mask])
-            merge_int[mz1_mask] += tmp_int[~mz2_mask]
-            merge_int = np.insert(merge_int, ins, tmp_int[mz2_mask])
-            merge_mz = np.insert(merge_mz, ins, tmp_mz[mz2_mask])
+            if not tmp_mz.size:
+                # If tmp_mz is empty after mz_range trimming, move onto next scan
+                continue
+            
+            merge_int += np.interp(ref_mz, tmp_mz, tmp_int, left=0, right=0)
 
         return merge_mz, merge_int
 
