@@ -1051,18 +1051,36 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             _mod_mz = self.peptides[pepind].mod_mzs[chgind]
             try:
                 self._autoscale_y(self.ms1Ax1, *self.data.time_range)
+                peaks = self.label_peaks(self.ms1Ax2, self.ms1Ln2)
                 self._autoscale_y(self.ms1Ax2, _mz-(4/chg), _mz+(6/chg))
                 self._autoscale_y(self.ms1Ax3, *self.data.time_range)
+                peaks = self.label_peaks(self.ms1Ax4, self.ms1Ln4)
                 self._autoscale_y(self.ms1Ax4, _mod_mz-(4/chg), _mod_mz+(6/chg))
                 self.ms1Canvas.draw_idle()
             except IndexError:
                 print('No data selected.')
+
+    def label_peaks(self, axis_, line_, min_=None, max_=None, threshold=0.05):
+        data_ = line_.get_data()
+        if not min_:
+            min_ = data_[0][0]
+        if not max_:
+            max_ = data_[0][-1]
+        idx = np.where((data_[0] >= min_) & (data_[0] <= max_))[0]
+        for txt in reversed(axis_.texts):
+            txt.remove()
+        peaks_ = self.data.detect_peaks((data_[0][idx], data_[1][idx]), threshold=data_[1][idx].max()*threshold)
+        for peak_ in peaks_:
+            axis_.text(data_[0][idx][peak_], data_[1][idx][peak_],
+                             "%.2f" % data_[0][idx][peak_], ha='center', va='bottom', clip_on=True)
+        return peaks_
 
     def zoomAx1(self, min_, max_):
         self._autoscale_y(self.ms1Ax1, min_, max_)
         self.ms1Canvas.draw_idle()
 
     def zoomAx2(self, min_, max_):
+        peaks = self.label_peaks(self.ms1Ax2, self.ms1Ln2, min_, max_)
         self._autoscale_y(self.ms1Ax2, min_, max_)
         self.ms1Canvas.draw_idle()
 
@@ -1071,6 +1089,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Canvas.draw_idle()
 
     def zoomAx4(self, min_, max_):
+        peaks = self.label_peaks(self.ms1Ax4, self.ms1Ln4, min_, max_)
         self._autoscale_y(self.ms1Ax4, min_, max_)
         self.ms1Canvas.draw_idle()
 
@@ -1079,15 +1098,9 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.status('Combining spectra...')
         chg = int(self.Ms1Charge.currentText())
         _mz = self.peptides[self.PepList.currentRow()].mzs[self.Ms1Charge.currentIndex()]
-        for txt in reversed(self.ms1Ax2.texts):
-            txt.remove()
         spectrum = self.data.spectrum(min_, max_, mz_range=(_mz-(4/chg), _mz+(6/chg)))
-        spec_max = spectrum[1].max()
         self.ms1Ln2.set_data(spectrum[0], spectrum[1])
-        peaks = self.data.detect_peaks((spectrum[0], spectrum[1]), threshold=spec_max*0.05)
-        for peak in peaks:
-            self.ms1Ax2.text(spectrum[0][peak], spectrum[1][peak],
-                             "%.2f" % spectrum[0][peak], ha='center', va='bottom', clip_on=True)
+        peaks = self.label_peaks(self.ms1Ax2, self.ms1Ln2)
         _nearest = np.abs(_mz - spectrum[0][peaks]).argmin() # nearest peak to mass
         if self.TolUnit.currentText() == 'mmu':
             self.PepMzErr.setText('{:.2f} mmu'.format((_mz - spectrum[0][peaks][_nearest])*1e3))
@@ -1107,15 +1120,9 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.status('Combining spectra...')
         chg = int(self.Ms1Charge.currentText())
         _mz = self.peptides[self.PepList.currentRow()].mod_mzs[self.Ms1Charge.currentIndex()]
-        for txt in reversed(self.ms1Ax4.texts):
-            txt.remove()
         spectrum = self.data.spectrum(min_, max_, mz_range=(_mz-(4/chg), _mz+(6/chg)))
-        spec_max = spectrum[1].max()
         self.ms1Ln4.set_data(spectrum[0], spectrum[1])
-        peaks = self.data.detect_peaks((spectrum[0], spectrum[1]), threshold=spec_max*0.05)
-        for peak in peaks:
-            self.ms1Ax4.text(spectrum[0][peak], spectrum[1][peak],
-                             "%.2f" % spectrum[0][peak], ha='center', va='bottom', clip_on=True)
+        peaks = self.label_peaks(self.ms1Ax4, self.ms1Ln4)
         _nearest = np.abs(_mz - spectrum[0][peaks]).argmin() # nearest peak to mass
         if self.TolUnit.currentText() == 'mmu':
             self.PepModMzErr.setText('{:.2f} mmu'.format((_mz - spectrum[0][peaks][_nearest])*1e3))
