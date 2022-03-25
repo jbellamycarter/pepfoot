@@ -72,7 +72,6 @@ else:
     BUNDLE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 APP = Qtw.QApplication(sys.argv)
-VERSION = '1.1'
 VERSION = '1.1.4b'
 APP_ICON = Qtg.QIcon(os.path.join(BUNDLE_DIR, 'gui', 'icon.png'))
 APP.setStyle("fusion")
@@ -190,6 +189,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.actionOpenProject.triggered.connect(self.open_project)
         self.actionExportCSV.triggered.connect(self.export_csv)
         self.actionQuit.triggered.connect(self.close)
+        self.actionDocumentation.triggered.connect(self.open_documentation)
         self.actionAbout.triggered.connect(lambda: self.about_dialog(0))
         self.actionCite.triggered.connect(lambda: self.about_dialog(1))
         self.actionLicense.triggered.connect(lambda: self.about_dialog(2))
@@ -1748,6 +1748,10 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         prefs = Preferences(tab, self)
         prefs.exec_()
         prefs.show()
+        
+    def open_documentation(self):
+        url = Qtc.QUrl("https://github.com/jbellamycarter/pepfoot/wiki")
+        Qtg.QDesktopServices.openUrl(url)
 
     def closeEvent(self, event):
         """Reimplement the closeEvent() event handler to include a 'Question'
