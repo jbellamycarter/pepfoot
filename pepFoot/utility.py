@@ -353,6 +353,47 @@ def get_isotopes(composition, threshold=0.001, tolerance=0.01, mass_dict=_rel_ma
 
     return np.array(masses), np.array(abun)
 
+def calc_extent_change(apo_mean, apo_stdev, holo_mean, holo_stdev):
+    """Calculate the extent of change in modification.
+    
+    The basic mathematical function is:
+    
+    extent = (f_holo - f_apo)/max{f_holo, f_apo}
+    
+    The output value have bounds (-1, +1) where -1 is complete masking 
+    and +1 is complete unmasking of the peptide.
+    
+    input
+    -----
+    apo_mean: array of fractional modification means for apo treatment
+    apo_stdev: array of fractional modification standard deviations for apo treatment
+    holo_mean: array of fractional modification means for holo treatment
+    holo_stdev: array of fractional modification standard deviations for holo treatment
+    
+    output
+    ------
+    extent_mean: array of mean extent of change in modification
+    extent_stdev: array of standard deviation extent of change in modification
+    """
+    
+    diff_mean = holo_mean - apo_mean
+    diff_stdev = np.sqrt(apo_stdev**2 + holo_stdev**2)
+    non_zero_mask = diff_mean != 0
+    
+    extent_mean = np.zeros_like(diff_mean)
+    # Calculate values for maximum function
+    max_mask = apo_mean < holo_mean
+    max_mean = np.maximum(apo_mean, holo_mean)
+    max_stdev = apo_stdev.copy()
+    np.asarray(max_stdev)[max_mask] = np.asarray(holo_stdev)[max_mask]
+    extent_mean[non_zero_mask] = diff_mean[non_zero_mask] / max_mean[non_zero_mask]
+    
+    # Calculate propagated standard deviations
+    extent_stdev = np.zeros_like(diff_stdev)
+    extent_stdev[non_zero_mask] = extent_mean[non_zero_mask] * np.sqrt((diff_stdev[non_zero_mask]/diff_mean[non_zero_mask])**2 + (max_stdev[non_zero_mask]/max_mean[non_zero_mask])**2)
+    
+    return extent_mean, extent_stdev
+
 def get_colours(colour, arr, threshold):
     """Convert array of data to colours ranging from colour to white.
     Colour must be RGB 0-1 tuple. Alt_colour is supplied for data that
@@ -383,6 +424,7 @@ def get_figure_rows(peptide_ids):
                     last = peptide_ids[i][1]
             else:
                 plotted.append(i)
+                last = peptide_ids[i][1]
         row += 1
         last = 0
 
