@@ -73,6 +73,7 @@ else:
 
 APP = Qtw.QApplication(sys.argv)
 VERSION = '1.1'
+VERSION = '1.1.4b'
 APP_ICON = Qtg.QIcon(os.path.join(BUNDLE_DIR, 'gui', 'icon.png'))
 APP.setStyle("fusion")
 APP.setAttribute(Qt.AA_EnableHighDpiScaling, True)
