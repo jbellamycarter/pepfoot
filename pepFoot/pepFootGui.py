@@ -1099,6 +1099,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1iso2.set_data(self.peptides[self.PepList.currentRow()].isotopes[0]/chg + PROTON, self.peptides[self.PepList.currentRow()].isotopes[1]/1.05)
         self.ms1Lim1.set_data([min_, max_], 0)
         self.ms1Canvas.draw_idle()
+        self._ms1_zoom_active()
         self.status('Spectra combined!')
 
     @wait_effect
@@ -1126,6 +1127,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1iso4.set_data(self.peptides[self.PepList.currentRow()].mod_isotopes[0]/chg + PROTON, self.peptides[self.PepList.currentRow()].mod_isotopes[1]/1.05)
         self.ms1Lim3.set_data([min_, max_], 0)
         self.ms1Canvas.draw_idle()
+        self._ms1_zoom_active()
         self.status('Spectra combined!')
 
     @wait_effect
@@ -1136,6 +1138,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self._autoscale_y(self.ms1Ax1, *self.data.time_range)
         self.ms1Ax1.info.set_text('m/z: {:.2f}-{:.2f}'.format(min_, max_))
         self.ms1Canvas.draw_idle()
+        self._ms1_zoom_active()
         self.status('Chromatogram extracted!', 500)
 
     @wait_effect
@@ -1146,6 +1149,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self._autoscale_y(self.ms1Ax3, *self.data.time_range)
         self.ms1Ax3.info.set_text('m/z: {:.2f}-{:.2f}'.format(min_, max_))
         self.ms1Canvas.draw_idle()
+        self._ms1_zoom_active()
         self.status('Chromatogram extracted!', 500)
 
     @wait_effect
@@ -1177,6 +1181,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             len(self.coverExp)*100/len(re.sub('[^ACDEFGHIKLMNPQRSTVWY]', '', self.sequence))))
         self.ms1Lim1.set_data([min_, max_], 0)
         self.ms1Canvas.draw_idle()
+        self._ms1_zoom_active()
         self.SAVED = False
 
     @wait_effect
@@ -1208,6 +1213,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             len(self.coverExp)*100/len(re.sub('[^ACDEFGHIKLMNPQRSTVWY]', '', self.sequence))))
         self.ms1Lim3.set_data([min_, max_], 0)
         self.ms1Canvas.draw_idle()
+        self._ms1_zoom_active()
         self.SAVED = False
 
     def remove_assignment(self, assignment):
