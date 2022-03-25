@@ -197,9 +197,10 @@ class mz5():
                                       self.scan_lookup['precursor'][min_scan:max_scan]))[0] + min_scan
             else:
                 scan_list = np.where(self.scan_lookup['ms level'][min_scan:max_scan] == 2)[0] + min_scan
-      
-        bin_width = np.median(np.diff(merge_mz[0])) # Determines median difference between adjacent m/z
-        ref_mz = np.arange(self.ms1_range, bin_width)
+
+        ref_scan = np.unique(self.get_mzs(scan_list[0]))
+        bin_width = np.min(np.diff(ref_scan)) # Determines minimum spacing between m/z for interpolation
+        ref_mz = np.arange(*self.ms1_range, bin_width)
 
         if mz_range:
             idx = np.where((ref_mz >= mz_range[0]) & (ref_mz < mz_range[1]))[0]
@@ -220,7 +221,7 @@ class mz5():
             
             merge_int += np.interp(ref_mz, tmp_mz, tmp_int, left=0, right=0)
 
-        return merge_mz, merge_int
+        return ref_mz, merge_int
 
     def get_area(self, rt_range, mz_range, ms_level=1):
         """Calculates the sum of intensities for given m/z and time ranges"""
