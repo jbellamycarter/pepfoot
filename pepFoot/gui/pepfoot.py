@@ -1216,6 +1216,7 @@ class Ui_MainWindow(object):
         self.actionLicense = QtWidgets.QAction(MainWindow)
         self.actionLicense.setObjectName("actionLicense")
         self.actionOpen_Recent = QtWidgets.QAction(MainWindow)
+        self.actionOpen_Recent.setDisabled(True)
         icon11 = QtGui.QIcon()
         icon11.addPixmap(QtGui.QPixmap(":/icons/img/Gnome-document-open-recent.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         self.actionOpen_Recent.setIcon(icon11)
