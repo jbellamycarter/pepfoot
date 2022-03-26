@@ -62,6 +62,7 @@ def report_exception(exc_type, exc_value, exc_traceback):
       print("--End of report--")
       sys.exit(1)
 
+os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
 sys.excepthook = report_exception
 
 sys.argv.append('--disable-web-security')
@@ -1063,20 +1064,22 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             except IndexError:
                 print('No data selected.')
 
-    def label_peaks(self, axis_, line_, min_=None, max_=None, threshold=0.05):
+    def label_peaks(self, axis_, line_, min_=None, max_=None, threshold=0.05, mute=False):
         data_ = line_.get_data()
         if not min_:
             min_ = data_[0][0]
         if not max_:
             max_ = data_[0][-1]
         idx = np.where((data_[0] >= min_) & (data_[0] <= max_))[0]
-        for txt in reversed(axis_.texts):
-            txt.remove()
+        if not mute:
+            for txt in reversed(axis_.texts):
+                txt.remove()
         peaks_ = self.data.detect_peaks((data_[0][idx], data_[1][idx]), threshold=data_[1][idx].max()*threshold)
-        for peak_ in peaks_:
-            axis_.text(data_[0][idx][peak_], data_[1][idx][peak_],
-                             "%.2f" % data_[0][idx][peak_], ha='center', va='bottom', clip_on=True)
-        return peaks_
+        if not mute:
+            for peak_ in peaks_:
+                axis_.text(data_[0][idx][peak_], data_[1][idx][peak_],
+                                 "%.2f" % data_[0][idx][peak_], ha='center', va='bottom', clip_on=True)
+        return data_[0][idx][peaks_], data_[1][idx][peaks_]
 
     def zoomAx1(self, min_, max_):
         self._autoscale_y(self.ms1Ax1, min_, max_)
@@ -1104,11 +1107,12 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         spectrum = self.data.spectrum(min_, max_, mz_range=(_mz-(4/chg), _mz+(6/chg)))
         self.ms1Ln2.set_data(spectrum[0], spectrum[1])
         peaks = self.label_peaks(self.ms1Ax2, self.ms1Ln2)
-        _nearest = np.abs(_mz - spectrum[0][peaks]).argmin() # nearest peak to mass
+        ma_peaks = self.label_peaks(self.ms1Ax2, self.ms1Ln2, _mz-0.1, _mz+0.1, 0.01, mute=True)
+        _nearest = np.abs(_mz - ma_peaks[0]).argmin() # nearest peak to mass
         if self.TolUnit.currentText() == 'mmu':
-            self.PepMzErr.setText('{:.2f} mmu'.format((_mz - spectrum[0][peaks][_nearest])*1e3))
+            self.PepMzErr.setText('{:.2f} mmu'.format((_mz - ma_peaks[0][_nearest])*1e3))
         else:
-            self.PepMzErr.setText('{:.2f} ppm'.format(((_mz - spectrum[0][peaks][_nearest])/_mz)*1e6))
+            self.PepMzErr.setText('{:.2f} ppm'.format(((_mz - ma_peaks[0][_nearest])/_mz)*1e6))
         self.ms1iso2.set_data([], [])
         self._autoscale_y(self.ms1Ax2, _mz-(4/chg), _mz+(6/chg))
         self.ms1Ax2.info.set_text('rt: {:.1f}-{:.1f}'.format(min_, max_))
@@ -1126,11 +1130,12 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         spectrum = self.data.spectrum(min_, max_, mz_range=(_mz-(4/chg), _mz+(6/chg)))
         self.ms1Ln4.set_data(spectrum[0], spectrum[1])
         peaks = self.label_peaks(self.ms1Ax4, self.ms1Ln4)
-        _nearest = np.abs(_mz - spectrum[0][peaks]).argmin() # nearest peak to mass
+        ma_peaks = self.label_peaks(self.ms1Ax4, self.ms1Ln4, _mz-0.1, _mz+0.1, 0.01, mute=True)
+        _nearest = np.abs(_mz - ma_peaks[0]).argmin() # nearest peak to mass
         if self.TolUnit.currentText() == 'mmu':
-            self.PepModMzErr.setText('{:.2f} mmu'.format((_mz - spectrum[0][peaks][_nearest])*1e3))
+            self.PepModMzErr.setText('{:.2f} mmu'.format((_mz - ma_peaks[0][_nearest])*1e3))
         else:
-            self.PepModMzErr.setText('{:.2f} ppm'.format(((_mz - spectrum[0][peaks][_nearest])/_mz)*1e6))
+            self.PepModMzErr.setText('{:.2f} ppm'.format(((_mz - ma_peaks[0][_nearest])/_mz)*1e6))
         self.ms1iso4.set_data([], [])
         self._autoscale_y(self.ms1Ax4, _mz-(4/chg), _mz+(6/chg))
         self.ms1Ax4.info.set_text('rt: {:.1f}-{:.1f}'.format(min_, max_))
