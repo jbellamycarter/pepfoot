@@ -1108,11 +1108,17 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Ln2.set_data(spectrum[0], spectrum[1])
         peaks = self.label_peaks(self.ms1Ax2, self.ms1Ln2)
         ma_peaks = self.label_peaks(self.ms1Ax2, self.ms1Ln2, _mz-0.1, _mz+0.1, 0.01, mute=True)
-        _nearest = np.abs(_mz - ma_peaks[0]).argmin() # nearest peak to mass
-        if self.TolUnit.currentText() == 'mmu':
-            self.PepMzErr.setText('{:.2f} mmu'.format((_mz - ma_peaks[0][_nearest])*1e3))
+        if ma_peaks[0]:
+            _nearest = np.abs(_mz - ma_peaks[0]).argmin() # nearest peak to mass
         else:
-            self.PepMzErr.setText('{:.2f} ppm'.format(((_mz - ma_peaks[0][_nearest])/_mz)*1e6))
+            _nearest = None
+        if _nearest:
+            if self.TolUnit.currentText() == 'mmu':
+                  self.PepMzErr.setText('{:.2f} mmu'.format((_mz - ma_peaks[0][_nearest])*1e3))
+            else:
+                  self.PepMzErr.setText('{:.2f} ppm'.format(((_mz - ma_peaks[0][_nearest])/_mz)*1e6))
+        else:
+            self.PepMzErr.setText('')
         self.ms1iso2.set_data([], [])
         self._autoscale_y(self.ms1Ax2, _mz-(4/chg), _mz+(6/chg))
         self.ms1Ax2.info.set_text('rt: {:.1f}-{:.1f}'.format(min_, max_))
@@ -1131,11 +1137,17 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Ln4.set_data(spectrum[0], spectrum[1])
         peaks = self.label_peaks(self.ms1Ax4, self.ms1Ln4)
         ma_peaks = self.label_peaks(self.ms1Ax4, self.ms1Ln4, _mz-0.1, _mz+0.1, 0.01, mute=True)
-        _nearest = np.abs(_mz - ma_peaks[0]).argmin() # nearest peak to mass
-        if self.TolUnit.currentText() == 'mmu':
-            self.PepModMzErr.setText('{:.2f} mmu'.format((_mz - ma_peaks[0][_nearest])*1e3))
+        if ma_peaks[0]:
+            _nearest = np.abs(_mz - ma_peaks[0]).argmin() # nearest peak to mass
         else:
-            self.PepModMzErr.setText('{:.2f} ppm'.format(((_mz - ma_peaks[0][_nearest])/_mz)*1e6))
+            _nearest = None
+        if _nearest:
+            if self.TolUnit.currentText() == 'mmu':
+                  self.PepModMzErr.setText('{:.2f} mmu'.format((_mz - ma_peaks[0][_nearest])*1e3))
+            else:
+                  self.PepModMzErr.setText('{:.2f} ppm'.format(((_mz - ma_peaks[0][_nearest])/_mz)*1e6))
+        else:
+            self.PepModMzErr.setText('')
         self.ms1iso4.set_data([], [])
         self._autoscale_y(self.ms1Ax4, _mz-(4/chg), _mz+(6/chg))
         self.ms1Ax4.info.set_text('rt: {:.1f}-{:.1f}'.format(min_, max_))
