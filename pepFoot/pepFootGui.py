@@ -1118,7 +1118,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             else:
                   self.PepMzErr.setText('{:.2f} ppm'.format(((_mz - ma_peaks[0][_nearest])/_mz)*1e6))
         else:
-            self.PepMzErr.setText('')
+            self.PepMzErr.setText('N/A')
         self.ms1iso2.set_data([], [])
         self._autoscale_y(self.ms1Ax2, _mz-(4/chg), _mz+(6/chg))
         self.ms1Ax2.info.set_text('rt: {:.1f}-{:.1f}'.format(min_, max_))
@@ -1147,7 +1147,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             else:
                   self.PepModMzErr.setText('{:.2f} ppm'.format(((_mz - ma_peaks[0][_nearest])/_mz)*1e6))
         else:
-            self.PepModMzErr.setText('')
+            self.PepModMzErr.setText('N/A')
         self.ms1iso4.set_data([], [])
         self._autoscale_y(self.ms1Ax4, _mz-(4/chg), _mz+(6/chg))
         self.ms1Ax4.info.set_text('rt: {:.1f}-{:.1f}'.format(min_, max_))
