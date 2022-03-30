@@ -1108,7 +1108,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Ln2.set_data(spectrum[0], spectrum[1])
         peaks = self.label_peaks(self.ms1Ax2, self.ms1Ln2)
         ma_peaks = self.label_peaks(self.ms1Ax2, self.ms1Ln2, _mz-0.1, _mz+0.1, 0.01, mute=True)
-        if ma_peaks[0]:
+        if ma_peaks[0].size > 0:
             _nearest = np.abs(_mz - ma_peaks[0]).argmin() # nearest peak to mass
         else:
             _nearest = None
@@ -1137,7 +1137,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Ln4.set_data(spectrum[0], spectrum[1])
         peaks = self.label_peaks(self.ms1Ax4, self.ms1Ln4)
         ma_peaks = self.label_peaks(self.ms1Ax4, self.ms1Ln4, _mz-0.1, _mz+0.1, 0.01, mute=True)
-        if ma_peaks[0]:
+        if ma_peaks[0].size > 0:
             _nearest = np.abs(_mz - ma_peaks[0]).argmin() # nearest peak to mass
         else:
             _nearest = None
