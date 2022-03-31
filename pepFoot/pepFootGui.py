@@ -1071,11 +1071,10 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         if not max_:
             max_ = data_[0][-1]
         idx = np.where((data_[0] >= min_) & (data_[0] <= max_))[0]
+        peaks_ = self.data.detect_peaks((data_[0][idx], data_[1][idx]), threshold=data_[1][idx].max()*threshold)
         if not mute:
             for txt in reversed(axis_.texts):
                 txt.remove()
-        peaks_ = self.data.detect_peaks((data_[0][idx], data_[1][idx]), threshold=data_[1][idx].max()*threshold)
-        if not mute:
             for peak_ in peaks_:
                 axis_.text(data_[0][idx][peak_], data_[1][idx][peak_],
                                  "%.2f" % data_[0][idx][peak_], ha='center', va='bottom', clip_on=True)
@@ -1110,9 +1109,6 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         ma_peaks = self.label_peaks(self.ms1Ax2, self.ms1Ln2, _mz-0.1, _mz+0.1, 0.01, mute=True)
         if ma_peaks[0].size > 0:
             _nearest = np.abs(_mz - ma_peaks[0]).argmin() # nearest peak to mass
-        else:
-            _nearest = None
-        if _nearest:
             if self.TolUnit.currentText() == 'mmu':
                   self.PepMzErr.setText('{:.2f} mmu'.format((_mz - ma_peaks[0][_nearest])*1e3))
             else:
@@ -1139,9 +1135,6 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         ma_peaks = self.label_peaks(self.ms1Ax4, self.ms1Ln4, _mz-0.1, _mz+0.1, 0.01, mute=True)
         if ma_peaks[0].size > 0:
             _nearest = np.abs(_mz - ma_peaks[0]).argmin() # nearest peak to mass
-        else:
-            _nearest = None
-        if _nearest:
             if self.TolUnit.currentText() == 'mmu':
                   self.PepModMzErr.setText('{:.2f} mmu'.format((_mz - ma_peaks[0][_nearest])*1e3))
             else:
