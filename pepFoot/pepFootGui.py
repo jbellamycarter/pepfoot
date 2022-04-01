@@ -1286,12 +1286,12 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
                 treatment = self.project['treatment']
                 mean1 = fmod[treatment[0]].mean(axis=0)
                 mean2 = fmod[treatment[1]].mean(axis=0)
-                mask1 = mean1 > threshold
-                mask2 = mean2 > threshold
+                mask1 = mean1 >= threshold
+                mask2 = mean2 >= threshold
                 stdev1 = fmod[treatment[0]].std(axis=0)
                 stdev2 = fmod[treatment[1]].std(axis=0)
                 tvalue, pvalue = stats.ttest_ind(fmod[treatment[0]], fmod[treatment[1]], axis=0)
-                sig_mask = (pvalue < significance) & mask1
+                sig_mask = (pvalue <= significance) & (mask1 | mask2)
                 sign_mask = np.sign(mean1[sig_mask]-mean2[sig_mask])
                 
                 extent_mean, extent_stdev = calc_extent_change(mean1, stdev1, mean2, stdev2)
@@ -1354,7 +1354,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
 
             else:
                 mean = fmod.mean(axis=0)
-                sig_mask = mean > threshold
+                sig_mask = mean >= threshold
                 sign_mask = np.ones_like(mean)[sig_mask]
                 stdev = fmod.std(axis=0)
                 width = 0.4
