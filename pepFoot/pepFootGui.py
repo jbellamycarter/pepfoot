@@ -196,6 +196,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.actionAbout.triggered.connect(lambda: self.about_dialog(0))
         self.actionCite.triggered.connect(lambda: self.about_dialog(1))
         self.actionLicense.triggered.connect(lambda: self.about_dialog(2))
+        self.actionAcknowledgements.triggered.connect(lambda: self.about_dialog(3))
         self.actionEditMods.triggered.connect(
             lambda: self.preferences_dialog(0))
         self.actionEditCleavages.triggered.connect(
@@ -295,8 +296,6 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.area3 = SpanSelector(self.ms1Ax3, self.areaAx3, 'horizontal',
                                        0.01, useblit=True, rectprops=dict(alpha=0.2, facecolor='#67a9cf'), button=1)
 
-        # self.Ms1PlotVL.addWidget(self.Ms1Toolbar)
-        # self.toolbar.hide()
         self._ms1_zoom_active()
         self.barFig = Figure(frameon=1)
         barGS = self.barFig.add_gridspec(6,1)
@@ -362,7 +361,8 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
                             'areas': [],
                             'fractional mod': [],
                             'pdb file': '',
-                            'treatment': []}
+                            'treatment': [],
+                            'pepfoot version': str(VERSION)}
             self.setWindowTitle(
                 'pepFoot {} - {}'.format(VERSION, self.project['name']))
             # Reset Current Parameters
