@@ -20,6 +20,7 @@
 
 import json
 import os
+import io
 import subprocess
 import re
 import sys
@@ -271,6 +272,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
 
         self.cid_up = self.ms1Canvas.mpl_connect(
             'button_press_event', self.zoomReset)
+        self.ms1_to_clip = self.ms1Canvas.mpl_connect('key_press_event', self.ms1fig_to_clipboard)
         self.zoom1 = SpanSelector(self.ms1Ax1, self.zoomAx1, 'horizontal', 0.01,
                                   useblit=True, rectprops=dict(alpha=0.2, facecolor='#333333'), button=1)
         self.zoom2 = SpanSelector(self.ms1Ax2, self.zoomAx2, 'horizontal', 0.01,
@@ -1478,6 +1480,59 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             _text += '    Average: {:.2f} ± {:.2f}\n'.format(fmod[:,idx].mean(), fmod[:,idx].std())
 
         self.BarInfo.setText(_text)
+            
+    def ms1fig_to_clipboard(self):
+        """Copies the current view of the Peptide Tab figure with chromatograms 
+        and spectra to the clipboard. Copied in the PNG file format.
+        
+        Copied figure has additional information printed to the top left, 
+        including the name of the data file, the peptide and differential mod.
+        """
+        if not self.PepList.count():
+            return
+        pepind = self.PepList.currentRow()
+        chgind = self.Ms1Charge.currentIndex()
+        
+        _pep = self.peptides[pepind]
+
+        _metadata = {'Description': 'Extracted ion chromatograms and summed mass spectra',
+                     'Copyright': 'CC-BY',
+                     'Creation Time': str(datetime.today().strftime('%d %b %Y  %I:%M%p')),
+                     'Software': 'PepFoot v'+str(VERSION)}
+        
+        info = ''
+        info += os.path.basename(self.data.filename)
+        info += ',  {0}-{2}-{1}'.format(*_pep.id, _pep.sequence)
+        info += ',  {}+'.format(_pep.chgs[chgind])
+        info += ',  ' + self.project['differential mod']
+
+        with io.BytesIO() as buffer:
+            _fig = self.ms1Fig
+            txt = _fig.text(0.01, 1, info, size=10, color='blue', transform=_fig.transFigure)
+            _fig.savefig(buffer, pad_inches=0.1, bbox_inches='tight', dpi=150, format='png', metadata=_metadata)
+            txt.remove()
+            self.ms1Canvas.draw_idle()
+            Qtw.QApplication.clipboard().setImage(Qtg.QImage.fromData(buffer.getvalue()))
+
+        self.status('Image copied to clipboard!', 500)
+
+    def barfig_to_clipboard(self):
+        """Copies the current view of the Analysis Tab figure to the clipboard. 
+        Copied in the PNG file format.
+        """
+
+        _metadata = {'Description': 'Fractional modification assessed by carbene footprinting',
+                     'Copyright': 'CC-BY',
+                     'Creation Time': str(datetime.today().strftime('%d %b %Y  %I:%M%p')),
+                     'Software': 'PepFoot v'+str(VERSION)}
+
+
+        with io.BytesIO() as buffer:
+            _fig = self.barFig
+            _fig.savefig(buffer, bbox_inches='tight', dpi=150, format='png', metadata=_metadata)
+            Qtw.QApplication.clipboard().setImage(Qtg.QImage.fromData(buffer.getvalue()))
+
+        self.status('Image copied to clipboard!', 500)
 
     def load_pdb(self, pdb_file=None):
         """Open .pdb and process with PDB object"""
@@ -1699,6 +1754,13 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
                 
             elif event.key() == Qt.Key_L:
                 self._ms1_chrom_label_toggle()
+                
+            elif (event.key() == Qt.Key_C) & (event.modifiers()==Qt.ControlModifier):
+                self.ms1fig_to_clipboard()
+
+        elif self.Tabs.currentIndex() == 1:    
+            if (event.key() == Qt.Key_C) & (event.modifiers()==Qt.ControlModifier):
+                self.barfig_to_clipboard()
 
     def load_settings(self):
         """Parse settings stored in self.settings to relevant objects/widgets"""
