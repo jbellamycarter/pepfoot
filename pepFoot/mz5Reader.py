@@ -240,12 +240,12 @@ class mz5():
 
         return int(np.trapz(area, x=self.scan_lookup['time'][scan_list]*60))
 
-    def detect_peaks(self, spectrum, order=3, threshold=500, cwt_width=0.1, cwt_minwidth=0.01):
+    def detect_peaks(self, spectrum, threshold=500, distance=4, prominence=0.8, width=3):
         """Peak picking from a given spectrum using the relative maxima
         algorithm using a window of size order.
 
         Only peaks above the specified threshold are returned"""
 
-        peaks = signal.argrelmax(spectrum[1], order=order)[0]
+        peaks, properties = signal.find_peaks(spectrum[1], height=threshold, prominence=prominence, width=width, distance=distance)
 
-        return peaks[spectrum[1][peaks] > threshold]
+        return peaks
