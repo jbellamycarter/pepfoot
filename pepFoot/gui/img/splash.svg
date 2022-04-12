@@ -2,24 +2,24 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
-   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    width="400"
    height="240"
    viewBox="0 0 400 240"
    id="svg2"
    version="1.1"
-   inkscape:version="0.92.3 (2405546, 2018-03-11)"
+   inkscape:version="1.1.2 (08b2f3d93c, 2022-04-05)"
    sodipodi:docname="splash.svg"
-   inkscape:export-filename="/home/jedd/Dropbox/Notes/Software/Footprinting/pepFoot/gui/splash.png"
-   inkscape:export-xdpi="300"
-   inkscape:export-ydpi="300">
+   inkscape:export-filename="/home/jedd/Documents/pepfoot/pepFoot/gui/splash.png"
+   inkscape:export-xdpi="150"
+   inkscape:export-ydpi="150"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4">
     <linearGradient
@@ -352,15 +352,15 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="10.554463"
-     inkscape:cx="177.73454"
-     inkscape:cy="120"
+     inkscape:zoom="2.6386158"
+     inkscape:cx="211.66401"
+     inkscape:cy="131.69784"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="false"
      units="px"
      inkscape:window-width="1920"
-     inkscape:window-height="996"
+     inkscape:window-height="964"
      inkscape:window-x="0"
      inkscape:window-y="27"
      inkscape:window-maximized="1"
@@ -369,7 +369,8 @@
      fit-margin-right="0"
      fit-margin-bottom="0"
      showguides="true"
-     inkscape:guide-bbox="true" />
+     inkscape:guide-bbox="true"
+     inkscape:pagecheckerboard="0" />
   <metadata
      id="metadata7">
     <rdf:RDF>
@@ -447,7 +448,7 @@
     </g>
     <text
        xml:space="preserve"
-       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;fill:#216778;fill-opacity:0.93103452;stroke:none;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;line-height:0%;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;letter-spacing:0px;word-spacing:0px;fill:#216778;fill-opacity:0.931035;stroke:none;stroke-width:0.5;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
        x="10.286402"
        y="879.09631"
        id="text4165"><tspan
@@ -455,10 +456,10 @@
          id="tspan4167"
          x="10.286402"
          y="879.09631"
-         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:70px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Light';fill:#216778;fill-opacity:0.93103452;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"><tspan
-           style="fill:#ff9955;-inkscape-font-specification:'Ubuntu Light';font-family:Ubuntu;font-weight:300;font-style:normal;font-stretch:normal;font-variant:normal;fill-opacity:0.92941177"
+         style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-size:70px;line-height:1.25;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Light';fill:#216778;fill-opacity:0.931035;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"><tspan
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Light';fill:#ff9955;fill-opacity:0.929412"
            id="tspan1107">pep</tspan><tspan
-           style="fill:#ff6600;-inkscape-font-specification:'Ubuntu Light';font-family:Ubuntu;font-weight:300;font-style:normal;font-stretch:normal;font-variant:normal"
+           style="font-style:normal;font-variant:normal;font-weight:300;font-stretch:normal;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Light';fill:#ff6600"
            id="tspan4420">Foot</tspan></tspan></text>
     <g
        id="g8026"
@@ -1698,17 +1699,18 @@
     <flowRoot
        xml:space="preserve"
        id="flowRoot1096"
-       style="fill:#000000;stroke:#b3b3b3;stroke-opacity:1;stroke-width:0;stroke-linejoin:round;stroke-linecap:butt;color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.66666667px;line-height:125%;font-family:Arial;-inkscape-font-specification:Arial;text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;baseline-shift:baseline;text-anchor:middle;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill-opacity:1;fill-rule:evenodd;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;filter-blend-mode:normal;filter-gaussianBlur-deviation:0;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"><flowRegion
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;line-height:125%;font-family:Arial;-inkscape-font-specification:Arial;text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:middle;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#b3b3b3;stroke-width:0;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"><flowRegion
          id="flowRegion1098"><rect
            id="rect1100"
            width="374.94003"
            height="17.37174"
            x="13.390716"
            y="215.39003" /></flowRegion><flowPara
-         id="flowPara1102" /></flowRoot>    <flowRoot
+         id="flowPara1102" /></flowRoot>
+    <flowRoot
        xml:space="preserve"
        id="flowRoot1104"
-       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.66666698px;line-height:125%;font-family:Arial;-inkscape-font-specification:Arial;text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:middle;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#b3b3b3;stroke-width:0;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
+       style="color:#000000;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.6667px;line-height:125%;font-family:Arial;-inkscape-font-specification:Arial;text-indent:0;text-align:center;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:middle;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#b3b3b3;stroke-width:0;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
        transform="translate(6,804.36212)"><flowRegion
          id="flowRegion1106"><rect
            id="rect1108"
@@ -1719,7 +1721,8 @@
          id="flowPara1116"
          style="font-size:8px;text-align:start;text-anchor:start;fill:#ffffff">Released under the GNU Lesser General Public License</flowPara><flowPara
          style="font-size:8px;text-align:start;text-anchor:start;fill:#ffffff"
-         id="flowPara2002">© 2019 Jeddidiah Bellamy-Carter, University of Nottingham</flowPara></flowRoot>    <flowRoot
+         id="flowPara2002">© 2019 Jeddidiah Bellamy-Carter, University of Nottingham</flowPara></flowRoot>
+    <flowRoot
        xml:space="preserve"
        id="flowRoot1118"
        style="color:#000000;font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:16px;line-height:125%;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';text-indent:0;text-align:start;text-decoration:none;text-decoration-line:none;text-decoration-style:solid;text-decoration-color:#000000;letter-spacing:0px;word-spacing:0px;text-transform:none;writing-mode:lr-tb;direction:ltr;baseline-shift:baseline;text-anchor:start;white-space:normal;clip-rule:nonzero;display:inline;overflow:visible;visibility:visible;opacity:1;isolation:auto;mix-blend-mode:normal;color-interpolation:sRGB;color-interpolation-filters:linearRGB;solid-color:#000000;solid-opacity:1;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#b3b3b3;stroke-width:0;stroke-linecap:butt;stroke-linejoin:round;stroke-miterlimit:10;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;color-rendering:auto;image-rendering:auto;shape-rendering:auto;text-rendering:auto;enable-background:accumulate"
@@ -1733,5 +1736,6 @@
            y="47.101307"
            style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:16px;font-family:Ubuntu;-inkscape-font-specification:'Ubuntu Medium';text-align:start;text-anchor:start" /></flowRegion><flowPara
          id="flowPara1124"
-         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;text-align:start;text-anchor:start;fill:#ffffff">1.1</flowPara></flowRoot>  </g>
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:16px;font-family:Ubuntu;-inkscape-font-specification:Ubuntu;text-align:start;text-anchor:start;fill:#ffffff">1.2</flowPara></flowRoot>
+  </g>
 </svg>
