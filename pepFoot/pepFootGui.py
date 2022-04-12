@@ -264,6 +264,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             ax.set_ylim(0, 10)
 
         self.ms1Fig.set_tight_layout(True)
+        self.ms1Fig.lbl_chrom = True
         self.ms1Canvas = FigureCanvas(self.ms1Fig)
         self.Ms1PlotVL.addWidget(self.ms1Canvas)
         self.ms1Canvas.draw_idle()
@@ -972,6 +973,8 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.reset_figures()
         self.ms1Ln1.set_data(self.data.chromatogram(*self._mz_ranges[0]))
         self.ms1Ln3.set_data(self.data.chromatogram(*self._mz_ranges[1]))
+        self.label_peaks(self.ms1Ax1, self.ms1Ln1, visible=self.ms1Fig.lbl_chrom)
+        self.label_peaks(self.ms1Ax3, self.ms1Ln3, visible=self.ms1Fig.lbl_chrom)
         self._autoscale_y(self.ms1Ax1, *self.data.time_range)
         self._autoscale_y(self.ms1Ax3, *self.data.time_range)
         self.ms1Ax1.info.set_text('m/z: {:.2f}-{:.2f}'.format(*self._mz_ranges[0]))
@@ -1071,7 +1074,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             except IndexError:
                 print('No data selected.')
 
-    def label_peaks(self, axis_, line_, min_=None, max_=None, threshold=0.05, mute=False):
+    def label_peaks(self, axis_, line_, min_=None, max_=None, threshold=0.05, mute=False, visible=True):
         data_ = line_.get_data()
         if not min_:
             min_ = data_[0][0]
@@ -1084,7 +1087,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
                 txt.remove()
             for peak_ in peaks_:
                 axis_.text(data_[0][idx][peak_], data_[1][idx][peak_],
-                                 "%.2f" % data_[0][idx][peak_], ha='center', va='bottom', clip_on=True)
+                                 "%.2f" % data_[0][idx][peak_], ha='center', va='bottom', clip_on=True, visible=visible)
         return data_[0][idx][peaks_], data_[1][idx][peaks_]
 
     def zoomAx1(self, min_, max_):
@@ -1671,6 +1674,14 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.combine3.active = False
         self.extract2.active = False
         self.extract4.active = False
+        
+    def _ms1_chrom_label_toggle(self):
+        self.ms1Fig.lbl_chrom = not self.ms1Fig.lbl_chrom 
+        for txt in self.ms1Ax1.texts:
+            txt.set_visible(self.ms1Fig.lbl_chrom)
+        for txt in self.ms1Ax3.texts:
+            txt.set_visible(self.ms1Fig.lbl_chrom)
+        self.ms1Canvas.draw_idle()
 
     def keyPressEvent(self, event):
         """Reimplement the keyPressEvent() event handler to include modifying
@@ -1685,6 +1696,9 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
 
             elif event.key() == Qt.Key_Z:
                 self._ms1_zoom_active()
+                
+            elif event.key() == Qt.Key_L:
+                self._ms1_chrom_label_toggle()
 
     def load_settings(self):
         """Parse settings stored in self.settings to relevant objects/widgets"""
