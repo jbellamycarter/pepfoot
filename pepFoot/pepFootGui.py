@@ -176,8 +176,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.Enzyme.insertSeparator(1)
         self.Enzyme.addItems(sorted(list(enzymes)))
         spacer = Qtw.QWidget(self)
-        spacer.setSizePolicy(Qtw.QSizePolicy.Expanding,
-                             Qtw.QSizePolicy.Expanding)
+        spacer.setSizePolicy(Qtw.QSizePolicy.Expanding, Qtw.QSizePolicy.Expanding)
         self.toolBar.insertWidget(self.actionHideParam, spacer)
         self.ProgressBar.reset()
         self.ProgressBar.setMaximum(1)
@@ -217,8 +216,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.NGL_continuous.stateChanged.connect(self.update_analysis)
 
         self.emblem = Qtg.QIcon()
-        self.emblem.addPixmap(Qtg.QPixmap(
-            ":/icons/img/Gnome-emblem-default.svg"), Qtg.QIcon.Normal, Qtg.QIcon.Off)
+        self.emblem.addPixmap(Qtg.QPixmap(":/icons/img/Gnome-emblem-default.svg"), Qtg.QIcon.Normal, Qtg.QIcon.Off)
 
         ######################
         # Initialising Plots #
