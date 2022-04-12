@@ -33,6 +33,7 @@ from scipy import stats
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from matplotlib.widgets import SpanSelector
+from matplotlib.backend_bases import MouseButton
 from PyQt5 import QtCore as Qtc
 from PyQt5 import QtGui as Qtg
 from PyQt5 import QtWidgets as Qtw
@@ -224,6 +225,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
 
         self.ms1Fig = Figure(frameon=1)
         self.ms1Ax1 = self.ms1Fig.add_subplot(221)
+        self.ms1Ax1.name = 'ms1Ax1'
         self.ms1Ax1.set_xlabel('Time')
         self.ms1Ax1.info = self.ms1Ax1.set_title('m/z: -', size='medium', loc='right')
         self.ms1Ax1.set_xlim(0, 10)
@@ -231,6 +233,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Lim1, = self.ms1Ax1.plot([], [], 'r', lw=1, marker=7, markersize=10, alpha=0.7)
 
         self.ms1Ax2 = self.ms1Fig.add_subplot(223)
+        self.ms1Ax2.name = 'ms1Ax2'
         self.ms1Ax2.set_xlabel('m/z', style='italic')
         self.ms1Ax2.info = self.ms1Ax2.set_title('rt: -', size='medium', loc='right')
         self.ms1Ax2.set_xlim(100, 1000)
@@ -238,6 +241,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1iso2, = self.ms1Ax2.plot([], [], c='hotpink', marker='o', alpha=0.7, transform=self.ms1Ax2.get_xaxis_transform())
 
         self.ms1Ax3 = self.ms1Fig.add_subplot(222)
+        self.ms1Ax3.name = 'ms1Ax3'
         self.ms1Ax3.set_xlabel('Time')
         self.ms1Ax3.info = self.ms1Ax3.set_title('m/z: -', size='medium', loc='right')
         self.ms1Ax3.set_xlim(0, 10)
@@ -245,6 +249,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Lim3, = self.ms1Ax3.plot([], [], 'r', lw=1, marker=7, markersize=10, alpha=0.7)
 
         self.ms1Ax4 = self.ms1Fig.add_subplot(224)
+        self.ms1Ax4.name = 'ms1Ax4'
         self.ms1Ax4.set_xlabel('m/z', style='italic')
         self.ms1Ax4.info = self.ms1Ax4.set_title('rt: -', size='medium', loc='right')
         self.ms1Ax4.set_xlim(100, 1000)
@@ -1045,20 +1050,24 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self._ms1_zoom_active()
 
     def zoomReset(self, event):
-        if (event.dblclick and not event.inaxes):
+        if (event.dblclick and event.button == MouseButton.RIGHT):
             pepind = self.PepList.currentRow()
             chgind = self.Ms1Charge.currentIndex()
             chg = int(self.Ms1Charge.currentText())
             _mz = self.peptides[pepind].mzs[chgind]
             _mod_mz = self.peptides[pepind].mod_mzs[chgind]
+
             try:
-                self._autoscale_y(self.ms1Ax1, *self.data.time_range)
-                peaks = self.label_peaks(self.ms1Ax2, self.ms1Ln2)
-                self._autoscale_y(self.ms1Ax2, _mz-(4/chg), _mz+(6/chg))
-                self._autoscale_y(self.ms1Ax3, *self.data.time_range)
-                peaks = self.label_peaks(self.ms1Ax4, self.ms1Ln4)
-                self._autoscale_y(self.ms1Ax4, _mod_mz-(4/chg), _mod_mz+(6/chg))
-                self.ms1Canvas.draw_idle()
+                if not hasattr(event.inaxes, 'name'):
+                    pass
+                elif event.inaxes.name == 'ms1Ax1':
+                    self.zoomAx1(*self.data.time_range)
+                elif event.inaxes.name == 'ms1Ax2':
+                    self.zoomAx2(_mz-(4/chg), _mz+(6/chg))
+                elif event.inaxes.name == 'ms1Ax3':
+                    self.zoomAx3(*self.data.time_range)
+                elif event.inaxes.name == 'ms1Ax4':
+                    self.zoomAx4(_mod_mz-(4/chg), _mod_mz+(6/chg))
             except IndexError:
                 print('No data selected.')
 
