@@ -23,6 +23,7 @@ import os
 import io
 import subprocess
 import re
+import requests
 import sys
 import traceback
 import time
@@ -1848,6 +1849,62 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
     def open_documentation(self):
         url = Qtc.QUrl("https://github.com/jbellamycarter/pepfoot/wiki")
         Qtg.QDesktopServices.openUrl(url)
+        
+    def check_for_updates(self):
+        """Check if there is a newer release of PepFoot available"""
+        
+        def _version_to_tuple(tag):
+            """Converts major.minor.patch software version numbers to tuple.
+            Tolerates numbers starting with 'v' and alpha/beta post-numbering
+            
+            Examples
+            --------
+            _version_to_tuple('1.1') returns (1,1,0)
+            _version_to_tuple('v1.1.1') returns (1,1,1)
+            _version_to_tuple('v1.1.1b') returns (1,1,1)
+            _version_to_tuple('v1.1.1-beta') returns (1,1,1)
+            """
+            
+            if tag.startswith('v'):
+                _tag = tag[1:].strip().split('.')
+            else:
+                _tag = tag.strip().split('.')
+            
+            ver = [0,0,0]
+            ver[0] = int(_tag[0]) #major 
+            if len(_tag) > 1:
+                ver[1] = int(re.sub('[^\d]', '', _tag[1])) #minor #Remove non-digits such as '-beta'
+            if len(_tag) > 2:
+                ver[2] = int(re.sub('[^\d]', '', _tag[2])) #patch #Remove non-digits such as '-beta'
+            
+            return ver
+        
+        
+        def _newer_version(tag1, tag2):
+            """Compare two software versions. Returns whether tag1 is newer than tag2.
+            
+            Examples
+            --------
+            newer_version('v1.2.1', '1.2') returns True
+            newer_version('1.2.1', '1.2.1') returns False
+            newer_version('1.2', '1.2.1') returns False
+            """
+            
+            _tag1 = _version_to_tuple(tag1)
+            _tag2 = _version_to_tuple(tag2)
+            
+            return _tag1 > _tag2
+        
+        response = requests.get("https://api.github.com/repos/jbellamycarter/pepfoot/releases/latest")
+        if _newer_version(response.json()['tag_name'], VERSION):
+            reply = Qtw.QMessageBox.question(self,
+                "Update Available",
+                "PepFoot version {} is available, you are currently using version {}, would you like to download the latest version?".format(response.json()['tag_name'], VERSION),
+                Qtw.QMessageBox.Yes | Qtw.QMessageBox.No, Qtw.QMessageBox.Yes)
+            
+            if reply == Qtw.QMessageBox.Yes:
+                url = Qtc.QUrl("https://github.com/jbellamycarter/pepfoot/releases/latest")
+                Qtg.QDesktopServices.openUrl(url)
 
     def closeEvent(self, event):
         """Reimplement the closeEvent() event handler to include a 'Question'
@@ -2066,6 +2123,8 @@ def run_app():
         main.open_project(sys.argv[1])
 
     SPLASH.finish(main)
+    
+    main.check_for_updates()
 
     sys.exit(APP.exec_())
 
