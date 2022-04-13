@@ -1558,7 +1558,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             print(e)
 
     def update_bfactor(self, ids, sig_mask, sign_mask, mean, continuous=False):
-        """Calculate B-factors from fmod data and apply to self.pdb
+        """Calculate B-factors from fmod or extent of mod change data and apply to self.pdb
 
         Not detected    -2  Wheat
         Insignificant    0  Grey
@@ -1589,7 +1589,6 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
 
             for i, peptide in enumerate(ids):
                 bfactors[peptide[0]-1:peptide[1]] = mean[i]
-                #bfactors[peptide[0]-1:peptide[1]] = -mean[i]
 
         try:
             self.pdb.bfactor_by_residue(strip_sequence, bfactors)
@@ -1669,7 +1668,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
        if (pickingProxy && (pickingProxy.atom || pickingProxy.bond)){
          var atom = pickingProxy.atom || pickingProxy.closestBondAtom;
          var cp = pickingProxy.canvasPosition;
-         tooltip.innerText = atom.resname + " " + atom.resno;
+         tooltip.innerText = atom.resname + " " + atom.resno + ":" + atom.chainname;
          tooltip.style.bottom = cp.y + 0 + "px";
          tooltip.style.left = cp.x + 0 + "px";
          tooltip.style.display = "block";
