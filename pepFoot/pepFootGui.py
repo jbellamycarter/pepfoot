@@ -51,19 +51,36 @@ from pepFoot.utility import *
 
 
 def report_exception(exc_type, exc_value, exc_traceback):
-      """Report unhandled exceptions and errors to user"""
+    """Report unhandled exceptions and errors to user"""
 
-      if issubclass(exc_type, KeyboardInterrupt):
+    if issubclass(exc_type, KeyboardInterrupt):
         if Qtg.qApp:
-          Qtg.qApp.quit()
+            Qtg.qApp.quit()
         return
 
-      Qtw.QMessageBox.warning(None, "Error", "An error has occurred. Please submit the following report to Jedd at j.s.g.bellamy-carter@bham.ac.uk\n\n{}".format("".join(traceback.format_exception(exc_type, exc_value, exc_traceback))))
+    traceback_message = "PepFoot crashed due to an error [{}]:\n\n".format(str(datetime.now()))
+    traceback_message += "".join(traceback.format_exception(exc_type, exc_value, exc_traceback))
+    traceback_message += "\n--End of Report--"
 
-      print("Closed due to an error. This is the full error report:")
-      print("".join(traceback.format_exception(exc_type, exc_value, exc_traceback)))
-      print("--End of report--")
-      sys.exit(1)
+    log_dir = Qtc.QStandardPaths.standardLocations(9)[0]
+
+    msg = Qtw.QMessageBox()
+    msg.setIcon(Qtw.QMessageBox.Warning)
+    msg.setWindowTitle("Error Encountered")
+    msg.setText("An error has occurred. Please submit the following report to Jedd at j.s.g.bellamy-carter@bham.ac.uk.\nAttempting to save log file to " + log_dir)
+    msg.setInformativeText("PepFoot will close now.")
+    msg.setDetailedText(traceback_message)
+    msg.setStandardButtons(Qtw.QMessageBox.Ok)
+    reply = msg.exec_()
+
+    try:
+        with open(os.path.join(log_dir, 'pepfoot_traceback_' + datetime.now().strftime("%Y-%m-%d-%H%M%S") + '.log'), 'w') as outfile:
+            outfile.write(traceback_message)
+    except BaseException as e:
+        print(e)
+        pass
+    print(traceback_message)
+    sys.exit(1)
 
 os.environ['QTWEBENGINE_DISABLE_SANDBOX'] = '1'
 sys.excepthook = report_exception
@@ -76,7 +93,7 @@ else:
     BUNDLE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 APP = Qtw.QApplication(sys.argv)
-VERSION = '1.1.4b'
+VERSION = '1.2'
 APP_ICON = Qtg.QIcon(os.path.join(BUNDLE_DIR, 'gui', 'icon.png'))
 APP.setStyle("fusion")
 APP.setAttribute(Qt.AA_EnableHighDpiScaling, True)
@@ -91,15 +108,16 @@ aa_comp = mass.std_aa_comp
 mods = {}
 enzymes = {}
 
-ORANGE = (0.9, 0.62, 0) #E69F00
-SKYBLUE = (0.34, 0.71, 0.91) #56b4e9
-GREEN = (0, 0.62, 0.45) #009E73
-YELLOW = (0.94, 0.89, 0.26)
-BLUE = (0, 0.45, 0.7) #0072B2
-VERMILLION = (0.84, 0.37, 0) #d55e00
-REDPURPLE = (0.8, 0.47, 0.65)
-WHEAT = '#F5DEB3'
-GREY = (0.9, 0.9, 0.9)#D3D3D3
+COLOUR_1 = [0.90, 0.62, 0.00]
+COLOUR_2 = [0.00, 0.45, 0.70]
+COLOUR_3 = [0.99, 0.42, 0.75]
+COLOUR_4 = [0.90, 0.62, 0.00]
+COLOUR_5 = [0.00, 0.45, 0.70]
+COLOUR_6 = [0.00, 0.62, 0.45]
+COLOUR_7 = [0.80, 0.47, 0.65]
+COLOUR_8 = [0.90, 0.90, 0.90]
+
+MaxRecentFiles = 15
 
 class Peptide():
     """Represent peptide objects"""
@@ -153,6 +171,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.settings.setFallbacksEnabled(False)
         self.setWindowTitle('pepFoot {}'.format(VERSION))
         self.load_settings()
+        print(COLOUR_4)
         self.project = {'data files': [], 'name': ''}
         self.project_file = ''
         self.project_dir = ''
@@ -192,6 +211,9 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.actionOpenProject.triggered.connect(self.open_project)
         self.actionExportCSV.triggered.connect(self.export_csv)
         self.actionQuit.triggered.connect(self.close)
+        self.menuOpen_Recent.aboutToShow.connect(self.update_recent_projects)
+        self.menuOpen_Recent.triggered.connect(self.open_recent_project)
+
         self.actionDocumentation.triggered.connect(self.open_documentation)
         self.actionAbout.triggered.connect(lambda: self.about_dialog(0))
         self.actionCite.triggered.connect(lambda: self.about_dialog(1))
@@ -232,7 +254,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Ax1.set_xlabel('Time')
         self.ms1Ax1.info = self.ms1Ax1.set_title('m/z: -', size='medium', loc='right')
         self.ms1Ax1.set_xlim(0, 10)
-        self.ms1Ln1, = self.ms1Ax1.plot([], [], c=BLUE)
+        self.ms1Ln1, = self.ms1Ax1.plot([], [], c=COLOUR_2)
         self.ms1Lim1, = self.ms1Ax1.plot([], [], 'r', lw=1, marker=7, markersize=10, alpha=0.7)
 
         self.ms1Ax2 = self.ms1Fig.add_subplot(223)
@@ -240,15 +262,15 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Ax2.set_xlabel('m/z', style='italic')
         self.ms1Ax2.info = self.ms1Ax2.set_title('rt: -', size='medium', loc='right')
         self.ms1Ax2.set_xlim(100, 1000)
-        self.ms1Ln2, = self.ms1Ax2.plot([], [], c=BLUE)
-        self.ms1iso2, = self.ms1Ax2.plot([], [], c='hotpink', marker='o', alpha=0.7, transform=self.ms1Ax2.get_xaxis_transform())
+        self.ms1Ln2, = self.ms1Ax2.plot([], [], c=COLOUR_2)
+        self.ms1iso2, = self.ms1Ax2.plot([], [], c=COLOUR_3, marker='o', alpha=0.7, transform=self.ms1Ax2.get_xaxis_transform())
 
         self.ms1Ax3 = self.ms1Fig.add_subplot(222)
         self.ms1Ax3.name = 'ms1Ax3'
         self.ms1Ax3.set_xlabel('Time')
         self.ms1Ax3.info = self.ms1Ax3.set_title('m/z: -', size='medium', loc='right')
         self.ms1Ax3.set_xlim(0, 10)
-        self.ms1Ln3, = self.ms1Ax3.plot([], [], c=ORANGE)
+        self.ms1Ln3, = self.ms1Ax3.plot([], [], c=COLOUR_1)
         self.ms1Lim3, = self.ms1Ax3.plot([], [], 'r', lw=1, marker=7, markersize=10, alpha=0.7)
 
         self.ms1Ax4 = self.ms1Fig.add_subplot(224)
@@ -256,8 +278,8 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.ms1Ax4.set_xlabel('m/z', style='italic')
         self.ms1Ax4.info = self.ms1Ax4.set_title('rt: -', size='medium', loc='right')
         self.ms1Ax4.set_xlim(100, 1000)
-        self.ms1Ln4, = self.ms1Ax4.plot([], [], c=ORANGE)
-        self.ms1iso4, = self.ms1Ax4.plot([], [], c='hotpink', marker='o', alpha=0.7, transform=self.ms1Ax4.get_xaxis_transform())
+        self.ms1Ln4, = self.ms1Ax4.plot([], [], c=COLOUR_1)
+        self.ms1iso4, = self.ms1Ax4.plot([], [], c=COLOUR_3, marker='o', alpha=0.7, transform=self.ms1Ax4.get_xaxis_transform())
 
         # Set common attributes
         for ax in self.ms1Fig.axes:
@@ -313,6 +335,29 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.barCanvas.draw_idle()
 
         self.bar_pick = self.barCanvas.mpl_connect('button_press_event', self.on_bar_pick)
+
+    def open_recent_project(self, action):
+        self.open_project(action.data())
+        
+    def update_recent_projects(self, last_project=None):
+        """Update the list of recently accessed files."""
+
+        # Add latest file opened to list, or move if already present
+        if last_project:
+            if last_project in self.recent_projects:
+                self.recent_projects.remove(last_project)
+            self.recent_projects.insert(0, last_project)
+        
+        if len(self.recent_projects) > MaxRecentFiles:
+            self.recent_projects = self.recent_projects[:MaxRecentFiles]
+
+        self.menuOpen_Recent.clear()
+        
+        for project in self.recent_projects:
+            action = self.menuOpen_Recent.addAction(os.path.basename(project))
+            action.setData(project)
+            if not os.path.exists(project):
+                action.setEnabled(False)
 
     def wait_effect(func):
         def wrapper(self, *args):
@@ -419,7 +464,6 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
                 self, 'Open pepFoot project', '', 'pepFoot Project (*.pfoot)')
 
         if self.project_file:
-            self.settings.setValue('Last File', self.project_file)
             self.project_dir = os.path.dirname(self.project_file)
             self.status('Opening {} ...'.format(os.path.basename(self.project_file)), 500)
 
@@ -492,6 +536,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
 
             except Exception as e:
                 self.status(str(e), 2000)
+        self.update_recent_projects(last_project=self.project_file)
 
     def save_project(self):
         """Saves project files"""
@@ -588,12 +633,21 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
                     self.project['areas'][0][1].append(pep.areas[1])
                     self.project['fractional mod'][0].append(
                         pep.areas[1]/(pep.areas[0]+pep.areas[1]))
+ 
+        try:
+            with open(self.project_file, 'w') as outfile:
+                json.dump(self.project, outfile, indent=1, sort_keys=True)
+            self.status('{} saved!'.format(os.path.basename(self.project['name'])), 500)
+            self.SAVED = True
+        
+        except (FileNotFoundError, PermissionError) as e:
+            reply = Qtw.QMessageBox.warning(self, 'File could not be saved',
+                         'The project file could not be saved, either the directory does not exist or it does not have write permissions. Please check your file system before trying again.',
+                         Qtw.QMessageBox.Ok, Qtw.QMessageBox.Ok)
+            if reply == Qtw.QMessageBox.Ok:
+                self.status('{} could not be saved.'.format(os.path.basename(self.project['name'])), 500)
+                return
 
-        with open(self.project_file, 'w') as outfile:
-            json.dump(self.project, outfile, indent=1, sort_keys=True)
-
-        self.status('{} saved!'.format(os.path.basename(self.project['name'])), 500)
-        self.SAVED = True
 
     def export_csv(self):
         """Export data from current .pfoot file into the .csv format.
@@ -1317,10 +1371,10 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
 
                 if not self.DiffPlotChk.isChecked():
 
-                    self.barAx1.bar(idx[mask1]-offset, mean1[mask1], width, yerr=stdev1[mask1], color=ORANGE, error_kw={'elinewidth':1}, capsize=2)
-                    self.barAx1.bar(idx[~mask1]-offset, mean1[~mask1], width, yerr=stdev1[~mask1], color='lightgray', error_kw={'elinewidth':1}, capsize=2)
-                    self.barAx1.bar(idx[mask2]+offset, mean2[mask2], width, yerr=stdev2[mask2], color=BLUE, error_kw={'elinewidth':1}, capsize=2)
-                    self.barAx1.bar(idx[~mask2]+offset, mean2[~mask2], width, yerr=stdev2[~mask2], color='lightgray', error_kw={'elinewidth':1}, capsize=2)
+                    self.barAx1.bar(idx[mask1]-offset, mean1[mask1], width, yerr=stdev1[mask1], color=COLOUR_4, error_kw={'elinewidth':1}, capsize=2)
+                    self.barAx1.bar(idx[~mask1]-offset, mean1[~mask1], width, yerr=stdev1[~mask1], color=COLOUR_8, error_kw={'elinewidth':1}, capsize=2)
+                    self.barAx1.bar(idx[mask2]+offset, mean2[mask2], width, yerr=stdev2[mask2], color=COLOUR_5, error_kw={'elinewidth':1}, capsize=2)
+                    self.barAx1.bar(idx[~mask2]+offset, mean2[~mask2], width, yerr=stdev2[~mask2], color=COLOUR_8, error_kw={'elinewidth':1}, capsize=2)
                     self.barAx1.plot(idx[sig_mask], np.maximum(mean1, mean2)[sig_mask]+0.1, 'ko', markersize=5)
                     self.barAx1.axhline(threshold, ls=':', lw=1, c='k')
 
@@ -1337,15 +1391,15 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
                         heights2 = -heights1
                         bottoms2 = -bottoms1
 
-                    self.barAx2.bar(pep_ids[:,0], heights1, widths, bottoms1, align='edge', color=get_colours(BLUE, mean1, threshold))
-                    self.barAx2.bar(pep_ids[:,0], heights2, widths, bottoms2, align='edge', color=get_colours(ORANGE, mean2, threshold))
+                    self.barAx2.bar(pep_ids[:,0], heights1, widths, bottoms1, align='edge', color=get_colours(COLOUR_4, mean1, threshold))
+                    self.barAx2.bar(pep_ids[:,0], heights2, widths, bottoms2, align='edge', color=get_colours(COLOUR_5, mean2, threshold))
                     self.barAx2.axhline(0, lw=1, c='0.5')
                     self.barAx1.set_ylabel('Fractional Modification')
 
                 else:
 
-                    self.barAx1.bar(idx[mask3], extent_mean[mask3], 0.4, yerr=extent_stdev[mask3], color=GREEN, error_kw={'elinewidth':1}, capsize=2)
-                    self.barAx1.bar(idx[~mask3], extent_mean[~mask3], 0.4, yerr=extent_stdev[~mask3], color=REDPURPLE, error_kw={'elinewidth':1}, capsize=2)
+                    self.barAx1.bar(idx[mask3], extent_mean[mask3], 0.4, yerr=extent_stdev[mask3], color=COLOUR_6, error_kw={'elinewidth':1}, capsize=2)
+                    self.barAx1.bar(idx[~mask3], extent_mean[~mask3], 0.4, yerr=extent_stdev[~mask3], color=COLOUR_7, error_kw={'elinewidth':1}, capsize=2)
                     self.barAx1.axhline(0, lw=1, c='0.5')
                     self.barAx1.yaxis.set_major_formatter(mtick.PercentFormatter(xmax=1))
                     self.barAx1.set_ylabel('Modification Difference %')
@@ -1361,8 +1415,8 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
                         bottoms = get_figure_rows(pep_ids)
                         self.barAx2.set_ylim(-0.05, bottoms.max()+1.05)
 
-                    self.barAx2.bar(pep_ids[:,0][mask3], heights[mask3], widths[mask3], bottoms[mask3], align='edge', color=get_colours(GREEN, extent_mean[mask3]/extent_max, threshold))
-                    self.barAx2.bar(pep_ids[:,0][~mask3], heights[~mask3], widths[~mask3], bottoms[~mask3], align='edge', color=get_colours(REDPURPLE, -extent_mean[~mask3]/extent_max, threshold))
+                    self.barAx2.bar(pep_ids[:,0][mask3], heights[mask3], widths[mask3], bottoms[mask3], align='edge', color=get_colours(COLOUR_6, extent_mean[mask3]/extent_max, threshold))
+                    self.barAx2.bar(pep_ids[:,0][~mask3], heights[~mask3], widths[~mask3], bottoms[~mask3], align='edge', color=get_colours(COLOUR_7, -extent_mean[~mask3]/extent_max, threshold))
                     self.barAx2.axhline(0, lw=1, c='0.5')
 
             else:
@@ -1372,8 +1426,8 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
                 stdev = fmod.std(axis=0)
                 width = 0.4
 
-                self.barAx1.bar(idx[sig_mask], mean[sig_mask], width, yerr=stdev[sig_mask], color=ORANGE, error_kw={'elinewidth':1}, capsize=2)
-                self.barAx1.bar(idx[~sig_mask], mean[~sig_mask], width, yerr=stdev[~sig_mask], color=BLUE, error_kw={'elinewidth':1}, capsize=2)
+                self.barAx1.bar(idx[sig_mask], mean[sig_mask], width, yerr=stdev[sig_mask], color=COLOUR_4, error_kw={'elinewidth':1}, capsize=2)
+                self.barAx1.bar(idx[~sig_mask], mean[~sig_mask], width, yerr=stdev[~sig_mask], color=COLOUR_5, error_kw={'elinewidth':1}, capsize=2)
                 self.barAx1.axhline(threshold, ls=':', lw=1, c='k')
                 self.barAx1.set_ylabel('Fractional Modification')
 
@@ -1387,8 +1441,8 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
                     bottoms = get_figure_rows(pep_ids)
                     self.barAx2.set_ylim(-0.05, bottoms.max()+1.05)
 
-                self.barAx2.bar(pep_ids[:,0][sig_mask], heights[sig_mask], widths[sig_mask], bottoms[sig_mask], align='edge', color=get_colours(ORANGE, mean[sig_mask], 0.01))
-                self.barAx2.bar(pep_ids[:,0][~sig_mask], heights[~sig_mask], widths[~sig_mask], bottoms[~sig_mask], align='edge', color=get_colours(BLUE, mean[~sig_mask], 0.01))
+                self.barAx2.bar(pep_ids[:,0][sig_mask], heights[sig_mask], widths[sig_mask], bottoms[sig_mask], align='edge', color=get_colours(COLOUR_4, mean[sig_mask], 0.01))
+                self.barAx2.bar(pep_ids[:,0][~sig_mask], heights[~sig_mask], widths[~sig_mask], bottoms[~sig_mask], align='edge', color=get_colours(COLOUR_5, mean[~sig_mask], 0.01))
                 self.barAx2.axhline(0, lw=1, c='0.5', zorder=0)
 
             labels = ['{}-{}'.format(*pep) for pep in self.project['peptides']]
@@ -1521,7 +1575,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         """Copies the current view of the Analysis Tab figure to the clipboard. 
         Copied in the PNG file format.
         """
-
+        raise AssertionError('aaaaah')
         _metadata = {'Description': 'Fractional modification assessed by carbene footprinting',
                      'Copyright': 'CC-BY',
                      'Creation Time': str(datetime.today().strftime('%d %b %Y  %I:%M%p')),
@@ -1560,8 +1614,8 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
     def update_bfactor(self, ids, sig_mask, sign_mask, mean, continuous=False):
         """Calculate B-factors from fmod or extent of mod change data and apply to self.pdb
 
-        Not detected    -2  Wheat
-        Insignificant    0  Grey
+        Not detected    -2  Grey
+        Insignificant    0  Yellow
         Significant      1  Red
         Significant -   -1  Blue
 
@@ -1765,6 +1819,14 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
     def load_settings(self):
         """Parse settings stored in self.settings to relevant objects/widgets"""
 
+        if 'Recent_Projects' in self.settings.childKeys():
+            self.recent_projects = self.settings.value('Recent_Projects')
+            if not self.recent_projects:
+                self.recent_projects = []
+        else:
+            self.recent_projects = []
+
+
         if 'pwiz' in self.settings.childKeys():
             self.pwiz = self.settings.value('pwiz')
         else:
@@ -1807,6 +1869,8 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
 
         if self.pwiz:
             self.settings.setValue('pwiz', self.pwiz)
+
+        self.settings.setValue('Recent_Projects', self.recent_projects)
 
         # Save Enzymes
 
@@ -1896,7 +1960,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         
         response = requests.get("https://api.github.com/repos/jbellamycarter/pepfoot/releases/latest")
         if _newer_version(response.json()['tag_name'], VERSION):
-            reply = Qtw.QMessageBox.question(self,
+            reply = Qtw.QMessageBox.information(self,
                 "Update Available",
                 "PepFoot version {} is available, you are currently using version {}, would you like to download the latest version?".format(response.json()['tag_name'], VERSION),
                 Qtw.QMessageBox.Yes | Qtw.QMessageBox.No, Qtw.QMessageBox.Yes)
@@ -1911,13 +1975,15 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         """
         self.save_settings()
         if not self.SAVED:
-            reply = Qtw.QMessageBox.question(
+            reply = Qtw.QMessageBox.warning(
                 self, "Quit PepFoot",
                 "Are you sure you want to quit? Any unsaved work will be lost.",
-                Qtw.QMessageBox.Close | Qtw.QMessageBox.Cancel, Qtw.QMessageBox.Cancel)
+                Qtw.QMessageBox.Discard | Qtw.QMessageBox.Save | Qtw.QMessageBox.Cancel, Qtw.QMessageBox.Cancel)
 
-            if reply == Qtw.QMessageBox.Close:
+            if reply == Qtw.QMessageBox.Discard:
                 event.accept()
+            elif reply == Qtw.QMessageBox.Save:
+                self.save_project()
             else:
                 event.ignore()
         else:

@@ -128,7 +128,7 @@
          <x>0</x>
          <y>0</y>
          <width>300</width>
-         <height>743</height>
+         <height>741</height>
         </rect>
        </property>
        <layout class="QGridLayout" name="gridLayout_11">
@@ -2735,7 +2735,7 @@
          </layout>
         </item>
         <item>
-         <widget class="QWebEngineView" name="NGLViewer">
+         <widget class="QWebEngineView" name="NGLViewer" native="true">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
             <horstretch>4</horstretch>
@@ -2760,7 +2760,7 @@
           <property name="autoFillBackground">
            <bool>false</bool>
           </property>
-          <property name="url">
+          <property name="url" stdset="0">
            <url>
             <string>about:blank</string>
            </url>
@@ -2779,7 +2779,7 @@
      <x>0</x>
      <y>0</y>
      <width>1406</width>
-     <height>20</height>
+     <height>22</height>
     </rect>
    </property>
    <property name="defaultUp">
@@ -2789,10 +2789,22 @@
     <property name="title">
      <string>&amp;File</string>
     </property>
+    <widget class="QMenu" name="menuOpen_Recent">
+     <property name="toolTip">
+      <string>Open Recent Projects</string>
+     </property>
+     <property name="title">
+      <string>Open &amp;Recent</string>
+     </property>
+     <property name="icon">
+      <iconset resource="icons.qrc">
+       <normaloff>:/icons/img/Gnome-document-open-recent.svg</normaloff>:/icons/img/Gnome-document-open-recent.svg</iconset>
+     </property>
+    </widget>
     <addaction name="actionNewProject"/>
     <addaction name="actionNew_from_Template"/>
     <addaction name="actionOpenProject"/>
-    <addaction name="actionOpen_Recent"/>
+    <addaction name="menuOpen_Recent"/>
     <addaction name="actionSaveProject"/>
     <addaction name="separator"/>
     <addaction name="actionHideParam"/>
@@ -3034,18 +3046,6 @@
   <action name="actionLicense">
    <property name="text">
     <string>&amp;License</string>
-   </property>
-  </action>
-  <action name="actionOpen_Recent">
-   <property name="icon">
-    <iconset resource="icons.qrc">
-     <normaloff>:/icons/img/Gnome-document-open-recent.svg</normaloff>:/icons/img/Gnome-document-open-recent.svg</iconset>
-   </property>
-   <property name="text">
-    <string>Open &amp;Recent</string>
-   </property>
-   <property name="toolTip">
-    <string>Open Recent Projects</string>
    </property>
   </action>
   <action name="actionPreferences">

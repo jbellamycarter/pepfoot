@@ -5,6 +5,11 @@
 ![Downloads](https://img.shields.io/github/downloads/jbellamycarter/pepfoot/total.svg)
 [![Python](https://img.shields.io/badge/language-python-blue.svg)](https://www.python.org)
 
+---
+**New Version Available**: PepFoot version [v1.2](https://github.com/jbellamycarter/pepfoot/releases/latest) has now been released, with added functionality.
+
+---
+
 PepFoot is intended for analysis and discovery in peptide footprinting, however 
 it may be expanded to encompass more in future releases. PepFoot is released under the [LGPL-3.0 license](https://choosealicense.com/licenses/lgpl-3.0/)
 
@@ -49,7 +54,7 @@ Linux users can add `pepFoot.desktop` to your local `applications` directory and
 
 * [Python 3](https://www.python.org)
 * [PyQt >= 5.11](https://www.riverbankcomputing.com/software/pyqt/)
-  * This software require `WebEngine`, this was split into a separate package from 5.12, use `PyQt5==5.11.2` if unsure.
+  * This software requires `PyQtWebEngine`, this was split into a separate package from 5.12, run `pip install PyQtWebEngine` if unsure.
 * [matplotlib](https://matplotlib.org/)
 * [numpy](https://www.numpy.org/)
 * [scipy](https://scipy.org/)
@@ -58,6 +63,30 @@ Linux users can add `pepFoot.desktop` to your local `applications` directory and
 
 [NGL viewer](https://github.com/arose/ngl) is provided by the minified file `ngl.js` that is included in this directory.
 
+Change Log
+----------
+
+### 1.2.0
+* Improved UI features:
+    - Default mouse action is _'zoom'_ to prevent unwanted integration/extraction.
+    - Refactored spectrum generation to prevent apparent peak splitting.
+    - Keyboard shortcuts for copying plots to clipboard. `Ctrl+C` on main plots.
+* Extension of _Export to CSV_ so that extent of modification is included (this has also been added to the Analysis viewer).
+* Update checker added. PepFoot will routinely check for a new release on start-up.
+* Open Recent projects menu is fully functioning.
+
+### 1.1.3
+* Improved support for Bruker data files.
+* Handles 'empty' MSn scans.
+* Max number of missed cleavages increased.
+
+### 1.1.2
+* In-software access to `msconvert` and import of non-`.mz5` data files. See the [wiki](https://github.com/jbellamycarter/pepfoot/wiki/Using-msconvert-with-PepFoot) for more details.
+* Fixes bug where some user set modifications were not properly stored.
+* _Note: the last version of PepFoot with a working `.dmg` installer for MacOS._
+
+### 1.1.0
+* First public release of PepFoot.
 
 Project Schema
 --------------
