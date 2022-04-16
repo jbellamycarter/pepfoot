@@ -171,7 +171,6 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         self.settings.setFallbacksEnabled(False)
         self.setWindowTitle('pepFoot {}'.format(VERSION))
         self.load_settings()
-        print(COLOUR_4)
         self.project = {'data files': [], 'name': ''}
         self.project_file = ''
         self.project_dir = ''
@@ -1575,7 +1574,6 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
         """Copies the current view of the Analysis Tab figure to the clipboard. 
         Copied in the PNG file format.
         """
-        raise AssertionError('aaaaah')
         _metadata = {'Description': 'Fractional modification assessed by carbene footprinting',
                      'Copyright': 'CC-BY',
                      'Creation Time': str(datetime.today().strftime('%d %b %Y  %I:%M%p')),
@@ -1736,7 +1734,7 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
   '''
         HTML += '<div id="viewport" style="width:100%; height:100%;"></div></body></html>'
 
-        self.NGLViewer.setHtml(HTML)
+        self.NGLViewer.setHtml(HTML, Qtc.QUrl("file://"))
 
 
     def _ms1_zoom_active(self):

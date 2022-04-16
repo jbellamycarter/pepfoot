@@ -16,7 +16,8 @@ setup(
                       'numpy',
                       'scipy',
                       'pyteomics',
-                      'h5py'],
+                      'h5py',
+                      'requests'],
     package_data={'pepFoot':['ngl.js','gui/*.png','COPYING*', '*.md']},
     entry_points={'gui_scripts':['pepfoot = pepFoot.pepFootGui:run_app']},
     classifiers=["License :: OSI Approved :: LGPL-3.0 License"]

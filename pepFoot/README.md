@@ -13,11 +13,13 @@ Requirements
 
 * [Python 3](https://www.python.org)
 * [PyQt >= 5.11](https://www.riverbankcomputing.com/software/pyqt/)
+    - PyQtWebEngine
 * [matplotlib](https://matplotlib.org/)
 * [numpy](https://www.numpy.org/)
 * [scipy](https://scipy.org/)
 * [pyteomics](https://pyteomics.readthedocs.io/)
 * [h5py](https://www.h5py.org/)
+* requests
 
 [NGL viewer](https://github.com/arose/ngl) is provided by the minified file `ngl.js` that is included in this directory.
 
