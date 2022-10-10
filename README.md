@@ -67,6 +67,9 @@ To install PepFoot simply mount the [`pepFoot_1_1_MacOSX.dmg`](https://github.co
 Change Log
 ----------
 
+### 1.2.1
+* Fixes bug with startup 'Check for Updates' that caused crashes when offline or on spotty networks.
+
 ### 1.2.0
 * Improved UI features:
     - Default mouse action is _'zoom'_ to prevent unwanted integration/extraction.

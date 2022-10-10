@@ -4,7 +4,7 @@ import sys
 
 setup(
     name="pepFoot",
-    version="1.2",
+    version="1.2.1",
     author="Jedd Bellamy-Carter",
     description="Graphical user interface application for semi-automated processing of protein footprinting data",
     license="LGPL-3.0",

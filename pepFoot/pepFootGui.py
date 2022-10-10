@@ -93,7 +93,7 @@ else:
     BUNDLE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 APP = Qtw.QApplication(sys.argv)
-VERSION = '1.2'
+VERSION = '1.2.1'
 APP_ICON = Qtg.QIcon(os.path.join(BUNDLE_DIR, 'gui', 'icon.png'))
 APP.setStyle("fusion")
 APP.setAttribute(Qt.AA_EnableHighDpiScaling, True)
@@ -1956,16 +1956,20 @@ class Main(Qtw.QMainWindow, Ui_MainWindow):
             
             return _tag1 > _tag2
         
-        response = requests.get("https://api.github.com/repos/jbellamycarter/pepfoot/releases/latest")
-        if _newer_version(response.json()['tag_name'], VERSION):
-            reply = Qtw.QMessageBox.information(self,
-                "Update Available",
-                "PepFoot version {} is available, you are currently using version {}, would you like to download the latest version?".format(response.json()['tag_name'], VERSION),
-                Qtw.QMessageBox.Yes | Qtw.QMessageBox.No, Qtw.QMessageBox.Yes)
+        try:
+            response = requests.get("https://api.github.com/repos/jbellamycarter/pepfoot/releases/latest")
+            if 'tag_name' in response.json() and _newer_version(response.json()['tag_name'], VERSION):
+                reply = Qtw.QMessageBox.information(self,
+                    "Update Available",
+                    "PepFoot version {} is available, you are currently using version {}, would you like to download the latest version?".format(response.json()['tag_name'], VERSION),
+                    Qtw.QMessageBox.Yes | Qtw.QMessageBox.No, Qtw.QMessageBox.Yes)
             
-            if reply == Qtw.QMessageBox.Yes:
-                url = Qtc.QUrl("https://github.com/jbellamycarter/pepfoot/releases/latest")
-                Qtg.QDesktopServices.openUrl(url)
+                if reply == Qtw.QMessageBox.Yes:
+                    url = Qtc.QUrl("https://github.com/jbellamycarter/pepfoot/releases/latest")
+                    Qtg.QDesktopServices.openUrl(url)
+        except requests.exceptions.RequestException as e:
+            print("Could not check for updates to pepFoot at this time, will try next time.")
+            pass
 
     def closeEvent(self, event):
         """Reimplement the closeEvent() event handler to include a 'Question'
