@@ -1079,7 +1079,7 @@
              </font>
             </property>
             <property name="toolTip">
-             <string/>
+             <string>Explore selected data file</string>
             </property>
             <property name="layoutDirection">
              <enum>Qt::LeftToRight</enum>
@@ -1125,7 +1125,7 @@
              </font>
             </property>
             <property name="toolTip">
-             <string>Batch Process all Data Files</string>
+             <string>Batch Process all data files</string>
             </property>
             <property name="text">
              <string>Batch</string>
@@ -1997,8 +1997,11 @@
             </property>
             <item>
              <widget class="QPushButton" name="ZoomBtn">
+              <property name="toolTip">
+               <string>Zoom chromatogram/spectrum</string>
+              </property>
               <property name="text">
-               <string>Zoom</string>
+               <string>Zoom (Z)</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -2010,8 +2013,11 @@
             </item>
             <item>
              <widget class="QPushButton" name="ExtractBtn">
+              <property name="toolTip">
+               <string>Extract chromatogram/spectrum</string>
+              </property>
               <property name="text">
-               <string>Extract</string>
+               <string>Extract (E)</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -2020,8 +2026,11 @@
             </item>
             <item>
              <widget class="QPushButton" name="IntegrateBtn">
+              <property name="toolTip">
+               <string>Integrate chromatogram</string>
+              </property>
               <property name="text">
-               <string>Integrate</string>
+               <string>Integrate (I)</string>
               </property>
               <property name="checkable">
                <bool>true</bool>
@@ -2205,6 +2214,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="toolTip">
+               <string>Threshold for signficant change in modification (Differential experiment only)</string>
+              </property>
               <property name="maximum">
                <double>1.000000000000000</double>
               </property>
@@ -2223,6 +2235,9 @@
                 <horstretch>1</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="toolTip">
+               <string>Threshold for significant modification</string>
               </property>
               <property name="maximum">
                <double>1.000000000000000</double>
@@ -2260,6 +2275,9 @@
                 <pointsize>9</pointsize>
                </font>
               </property>
+              <property name="toolTip">
+               <string>Display extent of modification (Differential experiment only)</string>
+              </property>
               <property name="text">
                <string>Difference Plot</string>
               </property>
@@ -2271,6 +2289,9 @@
                <font>
                 <pointsize>9</pointsize>
                </font>
+              </property>
+              <property name="toolTip">
+               <string>Toggle displaying 2D peptide map with stacked or overlapping bars</string>
               </property>
               <property name="text">
                <string>Unity</string>
@@ -2284,6 +2305,9 @@
           </item>
           <item>
            <widget class="QPushButton" name="AnalysisUpdateBtn">
+            <property name="toolTip">
+             <string>Update Analysis</string>
+            </property>
             <property name="text">
              <string>Update</string>
             </property>
@@ -2308,7 +2332,7 @@
          </layout>
         </item>
         <item>
-         <layout class="QVBoxLayout" name="verticalLayout">
+         <layout class="QVBoxLayout" name="BarLayout">
           <item>
            <widget class="QWidget" name="BarPlot" native="true">
             <property name="enabled">
@@ -2687,6 +2711,9 @@
              <font>
               <pointsize>10</pointsize>
              </font>
+            </property>
+            <property name="toolTip">
+             <string>Toggle whether threshold/significance values from Analysis tab are used</string>
             </property>
             <property name="text">
              <string>Continuous</string>
